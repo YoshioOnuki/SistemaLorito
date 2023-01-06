@@ -33,7 +33,7 @@ public class SubmodulosAdmin extends javax.swing.JPanel {
         btnTrabajadores = new javax.swing.JButton();
         btnReporteEntrada = new javax.swing.JButton();
         btnReporteSalida = new javax.swing.JButton();
-        btnReporteCambios = new javax.swing.JButton();
+        btnHistorialCambios = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 255));
         setMaximumSize(new java.awt.Dimension(230, 330));
@@ -79,16 +79,16 @@ public class SubmodulosAdmin extends javax.swing.JPanel {
             }
         });
 
-        btnReporteCambios.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
-        btnReporteCambios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/iconCambio.png"))); // NOI18N
-        btnReporteCambios.setText("Reporte de Cambios");
-        btnReporteCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnReporteCambios.setMaximumSize(new java.awt.Dimension(230, 50));
-        btnReporteCambios.setMinimumSize(new java.awt.Dimension(230, 50));
-        btnReporteCambios.setPreferredSize(new java.awt.Dimension(230, 50));
-        btnReporteCambios.addActionListener(new java.awt.event.ActionListener() {
+        btnHistorialCambios.setFont(new java.awt.Font("SF UI Display", 0, 16)); // NOI18N
+        btnHistorialCambios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/iconCambio.png"))); // NOI18N
+        btnHistorialCambios.setText("Historial de Cambios");
+        btnHistorialCambios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHistorialCambios.setMaximumSize(new java.awt.Dimension(230, 50));
+        btnHistorialCambios.setMinimumSize(new java.awt.Dimension(230, 50));
+        btnHistorialCambios.setPreferredSize(new java.awt.Dimension(230, 50));
+        btnHistorialCambios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReporteCambiosActionPerformed(evt);
+                btnHistorialCambiosActionPerformed(evt);
             }
         });
 
@@ -102,7 +102,7 @@ public class SubmodulosAdmin extends javax.swing.JPanel {
                     .addComponent(btnTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporteEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReporteSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReporteCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnHistorialCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,7 +114,7 @@ public class SubmodulosAdmin extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(btnReporteSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(btnReporteCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnHistorialCambios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -131,20 +131,41 @@ public class SubmodulosAdmin extends javax.swing.JPanel {
     }//GEN-LAST:event_btnTrabajadoresActionPerformed
 
     private void btnReporteEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteEntradaActionPerformed
-
+        SubmoduloReporteEntradas mEntrada = new SubmoduloReporteEntradas();
+        
+        mEntrada.setSize(new Dimension(970, 550));
+        mEntrada.setLocation(0,0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mEntrada,BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
     }//GEN-LAST:event_btnReporteEntradaActionPerformed
 
     private void btnReporteSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteSalidaActionPerformed
-
+        SubmoduloReporteSalidas mSalida = new SubmoduloReporteSalidas();
+        
+        mSalida.setSize(new Dimension(970, 550));
+        mSalida.setLocation(0,0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mSalida,BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
     }//GEN-LAST:event_btnReporteSalidaActionPerformed
 
-    private void btnReporteCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteCambiosActionPerformed
-
-    }//GEN-LAST:event_btnReporteCambiosActionPerformed
+    private void btnHistorialCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialCambiosActionPerformed
+        SubmoduloReporteCambios mCambios = new SubmoduloReporteCambios();
+        
+        mCambios.setSize(new Dimension(970, 550));
+        mCambios.setLocation(0,0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mCambios,BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
+    }//GEN-LAST:event_btnHistorialCambiosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnReporteCambios;
+    private javax.swing.JButton btnHistorialCambios;
     private javax.swing.JButton btnReporteEntrada;
     private javax.swing.JButton btnReporteSalida;
     private javax.swing.JButton btnTrabajadores;
