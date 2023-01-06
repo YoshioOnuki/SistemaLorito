@@ -5,7 +5,10 @@
  */
 package Vista;
 
+import Controlador.trabajadorController;
 import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -13,17 +16,54 @@ import java.awt.Color;
  */
 public class SubmoduloTrabajador extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ModuloTrabajador
-     */
+    DefaultTableModel m = new DefaultTableModel();
+    Controlador.trabajadorController trabController= new trabajadorController();
+    
     public SubmoduloTrabajador() {
         initComponents();
         placeholders();
+        buscarEmpleado();
     }
 
     
     void placeholders(){
         Textp txte = new Textp("Buscar Nombre/DNI", txtBuscarTrabajador);
+    }
+    
+    void buscarEmpleado(){
+        try {
+            m = trabController.consultarTrabajador(txtBuscarTrabajador.getText());
+            tablaTrab.setModel(m);
+            
+            TableColumn t1 = tablaTrab.getColumn("ID");
+            t1.setPreferredWidth(50);
+            t1.setMaxWidth(50);
+            t1.setMinWidth(50);
+            
+            TableColumn t2 = tablaTrab.getColumn("DNI");
+            t2.setPreferredWidth(100);
+            t2.setMaxWidth(100);
+            t2.setMinWidth(100);
+            
+            TableColumn t3 = tablaTrab.getColumn("NOMBRES");
+            t3.setPreferredWidth(240);
+            t3.setMaxWidth(240);
+            t3.setMinWidth(240);
+            
+            TableColumn t4 = tablaTrab.getColumn("DIRECCION");
+            t4.setPreferredWidth(290);
+            t4.setMaxWidth(290);
+            t4.setMinWidth(290);
+            
+            TableColumn t5 = tablaTrab.getColumn("ROL");
+            t5.setPreferredWidth(150);
+            t5.setMaxWidth(150);
+            t5.setMinWidth(150);
+            
+            tablaTrab.setRowHeight(25);
+        } catch (Exception e) {
+            System.out.println("Error al listar Trabajadores: " + e);
+        }
     }
     
     @SuppressWarnings("unchecked")

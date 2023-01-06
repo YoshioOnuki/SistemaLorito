@@ -5,6 +5,7 @@ import DB.ConDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.table.DefaultTableModel;
 
 
 public class historialController {
@@ -35,4 +36,6 @@ public class historialController {
         
         return r;
     }
+    
+    
 }
