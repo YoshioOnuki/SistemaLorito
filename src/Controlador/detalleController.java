@@ -43,11 +43,12 @@ public class detalleController {
         DefaultTableModel m = new DefaultTableModel(null, titulos);
         Object[] o = new Object[5];
         
-        String sql = "SELECT i.inventario_nombre, d.detalle_cantidad, d.detalle_fecha, t.trabajador_nombres FROM detalle_inventario d INNER JOIN inventario i ON d.inventario_id=i.inventario_id INNER JOIN trabajador t ON d.trabajador_id=t.trabajador_id WHERE i.inventario_nombre LIKE '%" + b + "%' OR t.trabajador_nombres LIKE '%" + b +"%'";
+        String sql = "SELECT i.inventario_nombre, d.detalle_cantidad, d.detalle_fecha, t.trabajador_nombres FROM detalle_inventario d INNER JOIN inventario i ON d.inventario_id=i.inventario_id INNER JOIN trabajador t ON d.trabajador_id=t.trabajador_id WHERE d.detalle_descripcion=? AND i.inventario_nombre LIKE '%" + b + "%' OR t.trabajador_nombres LIKE '%" + b +"%'";
    
         try {
             acce = con.conectardb();
             ps = acce.prepareStatement(sql);
+            ps.setObject(1, "entrada");
             rs = ps.executeQuery();
             while(rs.next()){
                 o[0] = rs.getInt(1);

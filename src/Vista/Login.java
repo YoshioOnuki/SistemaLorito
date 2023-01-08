@@ -28,6 +28,8 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema Lorito");
         placeholder();
+        txtUsuario.setText("admin");
+        txtContrasenia.setText("123");
     }
     
     
