@@ -38,7 +38,7 @@ public class detalleController {
     }
     
     //Consulta para mostrar Entradas
-    public DefaultTableModel consultarEntradas(String b){
+    public DefaultTableModel consultarEntradaSalida(String b, String tipo){
         String []titulos={"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"};
         DefaultTableModel m = new DefaultTableModel(null, titulos);
         Object[] o = new Object[5];
@@ -48,7 +48,7 @@ public class detalleController {
         try {
             acce = con.conectardb();
             ps = acce.prepareStatement(sql);
-            ps.setObject(1, "entrada");
+            ps.setObject(1, tipo);
             rs = ps.executeQuery();
             while(rs.next()){
                 o[0] = rs.getInt(1);
@@ -61,9 +61,11 @@ public class detalleController {
             
             acce.close();
         } catch (Exception e) {
-            System.out.println("error consultar datos del paciente para mostrar en la tabla: " + e);
+            System.out.println("Error consultar datos del paciente para mostrar en la tabla: " + e);
         }
 
         return m;
     }
+    
+    
 }

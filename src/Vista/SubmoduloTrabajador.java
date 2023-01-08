@@ -1,23 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
 import Controlador.trabajadorController;
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-/**
- *
- * @author yoshi
- */
+
 public class SubmoduloTrabajador extends javax.swing.JPanel {
 
     DefaultTableModel m = new DefaultTableModel();
     Controlador.trabajadorController trabController= new trabajadorController();
+    
+    public static int tipoCRUD, idTrabajador;
     
     public SubmoduloTrabajador() {
         initComponents();
@@ -27,7 +25,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
 
     
     void placeholders(){
-        Textp txte = new Textp("Buscar Nombre/DNI", txtBuscarTrabajador);
+        Textp txte = new Textp("Buscar", txtBuscarTrabajador);
     }
     
     void buscarEmpleado(){
@@ -66,21 +64,63 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         }
     }
     
+    void OpcTrab(int opc){
+        int fila = tablaTrab.getSelectedRow();
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }else{
+            //codEmp = Integer.parseInt(tablaEmp.getValueAt(fila, 0).toString());
+            
+            if(opc == 1){
+                idTrabajador = Integer.parseInt(tablaTrab.getValueAt(fila, 0).toString());
+                
+                tipoCRUD = 2;
+                Vista.SubmoduloTrabajadorAgregar mTrabAgr = new Vista.SubmoduloTrabajadorAgregar();
+
+                mTrabAgr.setSize(970, 550);
+                mTrabAgr.setLocation(0, 0);
+                Principal.PanelPrincipal.removeAll();
+                Principal.PanelPrincipal.add(mTrabAgr, BorderLayout.CENTER);
+                Principal.PanelPrincipal.revalidate();
+                Principal.PanelPrincipal.repaint();
+            }else if(opc == 2){
+                
+            }
+        }
+    }
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuTrab = new javax.swing.JPopupMenu();
+        actualizar = new javax.swing.JMenuItem();
+        asignarUsuario = new javax.swing.JMenuItem();
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtBuscarTrabajador = new javax.swing.JTextField();
-        btnNuevo3 = new javax.swing.JPanel();
-        IconNuevo3 = new javax.swing.JLabel();
-        IconNuevoHover3 = new javax.swing.JLabel();
+        btnNuevo = new javax.swing.JPanel();
+        IconNuevo = new javax.swing.JLabel();
+        IconNuevoHover = new javax.swing.JLabel();
         Tabla = new javax.swing.JScrollPane();
         tablaTrab = new javax.swing.JTable();
+
+        actualizar.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
+        actualizar.setText("Actualizar");
+        actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarActionPerformed(evt);
+            }
+        });
+        menuTrab.add(actualizar);
+
+        asignarUsuario.setText("Asignar Usuario");
+        menuTrab.add(asignarUsuario);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(970, 550));
@@ -186,44 +226,44 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnNuevo3.setBackground(new java.awt.Color(255, 255, 255));
-        btnNuevo3.setMaximumSize(new java.awt.Dimension(110, 42));
-        btnNuevo3.setMinimumSize(new java.awt.Dimension(110, 42));
-        btnNuevo3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnNuevo.setBackground(new java.awt.Color(255, 255, 255));
+        btnNuevo.setMaximumSize(new java.awt.Dimension(110, 42));
+        btnNuevo.setMinimumSize(new java.awt.Dimension(110, 42));
+        btnNuevo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnNuevo3MouseClicked(evt);
+                btnNuevoMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNuevo3MouseEntered(evt);
+                btnNuevoMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNuevo3MouseExited(evt);
+                btnNuevoMouseExited(evt);
             }
         });
 
-        IconNuevo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        IconNuevo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnNuevo.png"))); // NOI18N
+        IconNuevo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IconNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnNuevo.png"))); // NOI18N
 
-        IconNuevoHover3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        IconNuevoHover3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnNuevoHover.png"))); // NOI18N
+        IconNuevoHover.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        IconNuevoHover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/btnNuevoHover.png"))); // NOI18N
 
-        javax.swing.GroupLayout btnNuevo3Layout = new javax.swing.GroupLayout(btnNuevo3);
-        btnNuevo3.setLayout(btnNuevo3Layout);
-        btnNuevo3Layout.setHorizontalGroup(
-            btnNuevo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(IconNuevo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(btnNuevo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(IconNuevoHover3, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
+        javax.swing.GroupLayout btnNuevoLayout = new javax.swing.GroupLayout(btnNuevo);
+        btnNuevo.setLayout(btnNuevoLayout);
+        btnNuevoLayout.setHorizontalGroup(
+            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(IconNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(IconNuevoHover, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE))
         );
-        btnNuevo3Layout.setVerticalGroup(
-            btnNuevo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNuevo3Layout.createSequentialGroup()
+        btnNuevoLayout.setVerticalGroup(
+            btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNuevoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(IconNuevo3))
-            .addGroup(btnNuevo3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNuevo3Layout.createSequentialGroup()
+                .addComponent(IconNuevo))
+            .addGroup(btnNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, btnNuevoLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(IconNuevoHover3)))
+                    .addComponent(IconNuevoHover)))
         );
 
         Tabla.setMaximumSize(new java.awt.Dimension(830, 315));
@@ -239,6 +279,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
 
             }
         ));
+        tablaTrab.setComponentPopupMenu(menuTrab);
         Tabla.setViewportView(tablaTrab);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -257,13 +298,11 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addGap(0, 0, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(500, 500, 500)
-                                .addComponent(btnNuevo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(70, 70, 70)))
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +313,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnNuevo3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addComponent(Tabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
@@ -296,54 +335,53 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
     }//GEN-LAST:event_btnExitMouseExited
 
     private void txtBuscarTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarTrabajadorActionPerformed
-
+        
     }//GEN-LAST:event_txtBuscarTrabajadorActionPerformed
 
     private void txtBuscarTrabajadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarTrabajadorKeyTyped
-        //buscarTrabajador();
+        buscarEmpleado();
     }//GEN-LAST:event_txtBuscarTrabajadorKeyTyped
 
-    private void btnNuevo3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevo3MouseClicked
-//        Vista.HabitacionNuevo habitNuevo = new Vista.HabitacionNuevo();
-//
-//        habitNuevo.setSize(700, 510);
-//        habitNuevo.setLocation(0, 0);
-//        Contenido.panelContenido.removeAll();
-//        Contenido.panelContenido.add(habitNuevo, BorderLayout.CENTER);
-//        Contenido.panelContenido.revalidate();
-//        Contenido.panelContenido.repaint();
-    }//GEN-LAST:event_btnNuevo3MouseClicked
+    private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
+        tipoCRUD = 1;
+        Vista.SubmoduloTrabajadorAgregar mTrabAgr = new Vista.SubmoduloTrabajadorAgregar();
 
-    private void btnNuevo3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevo3MouseEntered
-        IconNuevo3.setVisible(false);
-        IconNuevoHover3.setVisible(true);
-    }//GEN-LAST:event_btnNuevo3MouseEntered
+        mTrabAgr.setSize(970, 550);
+        mTrabAgr.setLocation(0, 0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mTrabAgr, BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
+    }//GEN-LAST:event_btnNuevoMouseClicked
 
-    private void btnNuevo3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevo3MouseExited
-        IconNuevo3.setVisible(true);
-        IconNuevoHover3.setVisible(false);
-    }//GEN-LAST:event_btnNuevo3MouseExited
+    private void btnNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseEntered
+        IconNuevo.setVisible(false);
+        IconNuevoHover.setVisible(true);
+    }//GEN-LAST:event_btnNuevoMouseEntered
+
+    private void btnNuevoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseExited
+        IconNuevo.setVisible(true);
+        IconNuevoHover.setVisible(false);
+    }//GEN-LAST:event_btnNuevoMouseExited
+
+    private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
+        OpcTrab(1);
+    }//GEN-LAST:event_actualizarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconNuevo;
-    private javax.swing.JLabel IconNuevo1;
-    private javax.swing.JLabel IconNuevo2;
-    private javax.swing.JLabel IconNuevo3;
     private javax.swing.JLabel IconNuevoHover;
-    private javax.swing.JLabel IconNuevoHover1;
-    private javax.swing.JLabel IconNuevoHover2;
-    private javax.swing.JLabel IconNuevoHover3;
     private javax.swing.JScrollPane Tabla;
+    private javax.swing.JMenuItem actualizar;
+    private javax.swing.JMenuItem asignarUsuario;
     private javax.swing.JPanel btnExit;
     private javax.swing.JPanel btnNuevo;
-    private javax.swing.JPanel btnNuevo1;
-    private javax.swing.JPanel btnNuevo2;
-    private javax.swing.JPanel btnNuevo3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPopupMenu menuTrab;
     private javax.swing.JTable tablaTrab;
     private javax.swing.JTextField txtBuscarTrabajador;
     // End of variables declaration//GEN-END:variables

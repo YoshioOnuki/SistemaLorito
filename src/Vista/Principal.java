@@ -65,12 +65,12 @@ public class Principal extends javax.swing.JFrame {
         jPanel1.setMinimumSize(new java.awt.Dimension(1200, 620));
         jPanel1.setPreferredSize(new java.awt.Dimension(1200, 620));
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel2.setBackground(new java.awt.Color(144, 178, 228));
         jPanel2.setMaximumSize(new java.awt.Dimension(1200, 620));
         jPanel2.setMinimumSize(new java.awt.Dimension(1200, 620));
         jPanel2.setPreferredSize(new java.awt.Dimension(1200, 620));
 
-        jPanel6.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel6.setBackground(new java.awt.Color(144, 178, 228));
         jPanel6.setMaximumSize(new java.awt.Dimension(230, 620));
         jPanel6.setMinimumSize(new java.awt.Dimension(230, 620));
         jPanel6.setPreferredSize(new java.awt.Dimension(230, 620));
@@ -80,10 +80,10 @@ public class Principal extends javax.swing.JFrame {
         jLabel5.setMinimumSize(new java.awt.Dimension(130, 70));
         jLabel5.setPreferredSize(new java.awt.Dimension(130, 70));
 
-        PanelMod2.setBackground(new java.awt.Color(204, 204, 255));
-        PanelMod2.setMaximumSize(new java.awt.Dimension(230, 330));
-        PanelMod2.setMinimumSize(new java.awt.Dimension(230, 330));
-        PanelMod2.setPreferredSize(new java.awt.Dimension(230, 330));
+        PanelMod2.setBackground(new java.awt.Color(144, 178, 228));
+        PanelMod2.setMaximumSize(new java.awt.Dimension(230, 340));
+        PanelMod2.setMinimumSize(new java.awt.Dimension(230, 340));
+        PanelMod2.setPreferredSize(new java.awt.Dimension(230, 340));
 
         javax.swing.GroupLayout PanelMod2Layout = new javax.swing.GroupLayout(PanelMod2);
         PanelMod2.setLayout(PanelMod2Layout);
@@ -93,7 +93,7 @@ public class Principal extends javax.swing.JFrame {
         );
         PanelMod2Layout.setVerticalGroup(
             PanelMod2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 330, Short.MAX_VALUE)
+            .addGap(0, 340, Short.MAX_VALUE)
         );
 
         btnCerrarSesion.setBackground(new java.awt.Color(53, 66, 89));
@@ -164,7 +164,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(15, 15, 15)
                 .addComponent(PanelMod2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -296,19 +296,13 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelMod;
-    private javax.swing.JPanel PanelMod1;
-    private javax.swing.JPanel PanelMod2;
+    public static javax.swing.JPanel PanelMod2;
     public static javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JPanel btnCerrarSesion;
+    public static javax.swing.JPanel btnCerrarSesion;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblCerrarSe;
     private javax.swing.JLabel lblNombrePrincipal;

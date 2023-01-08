@@ -107,7 +107,7 @@ public class Login extends javax.swing.JFrame {
         Fondo.setMinimumSize(new java.awt.Dimension(1000, 550));
         Fondo.setPreferredSize(new java.awt.Dimension(1000, 550));
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(144, 178, 228));
         jPanel1.setMaximumSize(new java.awt.Dimension(500, 550));
         jPanel1.setMinimumSize(new java.awt.Dimension(500, 550));
 

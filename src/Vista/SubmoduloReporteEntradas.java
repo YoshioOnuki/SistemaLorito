@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista;
 
 import Controlador.detalleController;
@@ -12,10 +8,6 @@ import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-/**
- *
- * @author yoshi
- */
 public class SubmoduloReporteEntradas extends javax.swing.JPanel {
 
     DefaultTableModel m = new DefaultTableModel();
@@ -34,7 +26,7 @@ public class SubmoduloReporteEntradas extends javax.swing.JPanel {
     
     void buscarEmpleado(){
         try {
-            m = entradasController.consultarEntradas(txtBuscarEntrada.getText());
+            m = entradasController.consultarEntradaSalida(txtBuscarEntrada.getText(), "Entrada");
             tablaReporteEntrada.setModel(m);
             
             //"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"
@@ -253,7 +245,7 @@ public class SubmoduloReporteEntradas extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarEntradaActionPerformed
 
     private void txtBuscarEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarEntradaKeyTyped
-        //buscarTrabajador();
+        buscarEmpleado();
     }//GEN-LAST:event_txtBuscarEntradaKeyTyped
 
 

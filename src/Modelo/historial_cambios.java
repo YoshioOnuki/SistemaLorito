@@ -5,49 +5,50 @@ public class historial_cambios {
     private int historial_id;
     private String historial_descripcion;
     private String historial_fecha;
-    private int historial_trabajador_id;
+    private String historial_trabajador;
 
     public historial_cambios() {
     }
 
-    public historial_cambios(int historialID, String historialDescripcion, String historialFecha, int historialTrabajadorID) {
-        this.historial_id = historialID;
-        this.historial_descripcion = historialDescripcion;
-        this.historial_fecha = historialFecha;
-        this.historial_trabajador_id = historialTrabajadorID;
+    public historial_cambios(int historial_id, String historial_descripcion, String historial_fecha, String historial_trabajador) {
+        this.historial_id = historial_id;
+        this.historial_descripcion = historial_descripcion;
+        this.historial_fecha = historial_fecha;
+        this.historial_trabajador = historial_trabajador;
     }
 
-    public int getHistorialID() {
+    public int getHistorial_id() {
         return historial_id;
     }
 
-    public void setHistorialID(int historialID) {
-        this.historial_id = historialID;
+    public void setHistorial_id(int historial_id) {
+        this.historial_id = historial_id;
     }
 
-    public String getHistorialDescripcion() {
+    public String getHistorial_descripcion() {
         return historial_descripcion;
     }
 
-    public void setHistorialDescripcion(String historialDescripcion) {
-        this.historial_descripcion = historialDescripcion;
+    public void setHistorial_descripcion(String historial_descripcion) {
+        this.historial_descripcion = historial_descripcion;
     }
 
-    public String getHistorialFecha() {
+    public String getHistorial_fecha() {
         return historial_fecha;
     }
 
-    public void setHistorialFecha(String historialFecha) {
-        this.historial_fecha = historialFecha;
+    public void setHistorial_fecha(String historial_fecha) {
+        this.historial_fecha = historial_fecha;
     }
 
-    public int getHistorialTrabajadorID() {
-        return historial_trabajador_id;
+    public String getHistorial_trabajador() {
+        return historial_trabajador;
     }
 
-    public void setHistorialTrabajadorID(int historialTrabajadorID) {
-        this.historial_trabajador_id = historialTrabajadorID;
+    public void setHistorial_trabajador(String historial_trabajador) {
+        this.historial_trabajador = historial_trabajador;
     }
+
     
     
 }

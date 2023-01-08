@@ -6,6 +6,7 @@ import Modelo.trabajador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -36,6 +37,56 @@ public class trabajadorController {
         }
         
         return r;
+    }
+    
+    //Actualizar trabajador
+    public int updateTrabajador(Object[] o) {
+        int r = 0;
+        String sql = "UPDATE trabajador SET trabajador_DNI=?, trabajador_nombres=?, trabajador_direccion=?, rol_id=? WHERE trabajador_id=?";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            ps.setObject(1, o[0]);
+            ps.setObject(2, o[1]);
+            ps.setObject(3, o[2]);
+            ps.setObject(4, o[3]);
+            ps.setObject(5, o[4]);
+            r = ps.executeUpdate();
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error actualizar Trabajador" + e);
+        }
+        
+        return r;
+    }
+    
+    public int validarDuplicados(String dni){
+        int r = 0, cont = 0;
+        
+        String sql = "SELECT trabajador_DNI FROM trabajador WHERE trabajador_DNI=?";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            ps.setObject(1, dni);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                r = rs.getInt(1);
+                if(r > 0){
+                    cont++;
+                    r = 0;
+                }
+                    
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error al obtener el último ID del trabajador:  " + e);
+        }
+        
+        return cont;
     }
     
     
@@ -96,27 +147,47 @@ public class trabajadorController {
         return m;
     }
     
-    //Retornamos el último ID del trabajador ingresado en la DB
-//    public int ultimoIdTrabajador(){
-//        int r = 0;
-//        
-//        String sql = "SELECT max(trabajador_id) FROM trabajador";
-//        
-//        try {
-//            acce = con.conectardb();
-//            ps = acce.prepareStatement(sql);
-//            rs = ps.executeQuery();
-//            while(rs.next()){
-//                r = rs.getInt(1);
-//            }
-//            
-//            acce.close();
-//        } catch (Exception e) {
-//            System.out.println("Error al obtener el último ID del trabajador:  " + e);
-//        }
-//        
-//        return r;
-//    }
+//    Retornamos el último ID del trabajador ingresado en la DB
+    public int ultimoIdTrabajador(){
+        int r = 0;
+        
+        String sql = "SELECT max(trabajador_id) FROM trabajador";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                r = rs.getInt(1);
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error al obtener el último ID del trabajador:  " + e);
+        }
+        
+        return r;
+    }
+    
+    public void cargarComboRol(JComboBox cbo){
+        
+        String sql = "SELECT rol_descripcion FROM rol";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            rs = ps.executeQuery();
+            cbo.removeAllItems();
+            cbo.addItem("Seleccione");
+            
+            while(rs.next()){
+                cbo.addItem(rs.getString(1));
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error en combo Area: " + e);
+        }
+    }
     
     
 }
