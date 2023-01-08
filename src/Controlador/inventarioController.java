@@ -6,6 +6,7 @@ import Modelo.inventario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 public class inventarioController {

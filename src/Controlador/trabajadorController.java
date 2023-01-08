@@ -183,26 +183,6 @@ public class trabajadorController {
         return r;
     }
     
-    public void cargarComboRol(JComboBox cbo){
-        
-        String sql = "SELECT rol_descripcion FROM rol";
-        
-        try {
-            acce = con.conectardb();
-            ps = acce.prepareStatement(sql);
-            rs = ps.executeQuery();
-            cbo.removeAllItems();
-            cbo.addItem("Seleccione");
-            
-            while(rs.next()){
-                cbo.addItem(rs.getString(1));
-            }
-            
-        } catch (Exception e) {
-            System.out.println("Error en combo Area: " + e);
-        }
-    }
-    
     //Validamos rol por trabajador.
     public String validarTrabajadorRol(int idTrab){
         Modelo.trabajador trabModelo = new trabajador();

@@ -7,6 +7,7 @@ import Modelo.trabajador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JComboBox;
 
 public class rolController {
     PreparedStatement ps;
@@ -59,6 +60,27 @@ public class rolController {
         }
         
         return rolModelo;
+    }
+    
+    public void cargarComboRol(JComboBox cbo){
+        
+        String sql = "SELECT rol_descripcion FROM rol";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            rs = ps.executeQuery();
+            cbo.removeAllItems();
+            cbo.addItem("Seleccione");
+            
+            while(rs.next()){
+                cbo.addItem(rs.getString(1));
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error en combo Rol: " + e);
+        }
     }
     
     

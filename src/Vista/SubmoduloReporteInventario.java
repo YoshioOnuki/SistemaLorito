@@ -3,6 +3,7 @@ package Vista;
 
 import Controlador.inventarioController;
 import Modelo.inventario;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -14,6 +15,8 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     Controlador.inventarioController inveController = new inventarioController();
     
     Modelo.inventario inveModelo = new inventario();
+    
+    public static int tipoCRUD;
 
     
     public SubmoduloReporteInventario() {
@@ -322,14 +325,16 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarInventarioKeyTyped
 
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
-        //        Vista.HabitacionNuevo habitNuevo = new Vista.HabitacionNuevo();
-        //
-        //        habitNuevo.setSize(700, 510);
-        //        habitNuevo.setLocation(0, 0);
-        //        Contenido.panelContenido.removeAll();
-        //        Contenido.panelContenido.add(habitNuevo, BorderLayout.CENTER);
-        //        Contenido.panelContenido.revalidate();
-        //        Contenido.panelContenido.repaint();
+        tipoCRUD = 1;
+        
+        Vista.SubmoduloInventarioAgregar mInventarioAgre = new SubmoduloInventarioAgregar();
+        
+        mInventarioAgre.setSize(970, 550);
+        mInventarioAgre.setLocation(0, 0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mInventarioAgre, BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
     }//GEN-LAST:event_btnNuevoMouseClicked
 
     private void btnNuevoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseEntered
