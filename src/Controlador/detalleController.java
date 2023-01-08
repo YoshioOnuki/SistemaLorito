@@ -39,11 +39,12 @@ public class detalleController {
     
     //Consulta para mostrar Entradas
     public DefaultTableModel consultarEntradaSalida(String b, String tipo){
-        String []titulos={"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"};
+        String []titulos={"ID", "PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"};
         DefaultTableModel m = new DefaultTableModel(null, titulos);
         Object[] o = new Object[5];
+        int cont = 1;
         
-        String sql = "SELECT i.inventario_nombre, d.detalle_cantidad, d.detalle_fecha, t.trabajador_nombres FROM detalle_inventario d INNER JOIN inventario i ON d.inventario_id=i.inventario_id INNER JOIN trabajador t ON d.trabajador_id=t.trabajador_id WHERE d.detalle_descripcion=? AND i.inventario_nombre LIKE '%" + b + "%' OR t.trabajador_nombres LIKE '%" + b +"%'";
+        String sql = "SELECT i.inventario_nombre, d.detalle_cantidad, d.detalle_fecha, t.trabajador_nombres FROM detalle_inventario d INNER JOIN inventario i ON d.inventario_id=i.inventario_id INNER JOIN trabajador t ON d.trabajador_id=t.trabajador_id WHERE d.detalle_descripcion=? AND (i.inventario_nombre LIKE '%" + b + "%' OR t.trabajador_nombres LIKE '%" + b +"%')";
    
         try {
             acce = con.conectardb();
@@ -51,10 +52,13 @@ public class detalleController {
             ps.setObject(1, tipo);
             rs = ps.executeQuery();
             while(rs.next()){
-                o[0] = rs.getInt(1);
-                o[1] = rs.getString(2);
-                o[2] = rs.getString(3);
-                o[3] = rs.getString(4);
+                o[0] = cont;
+                o[1] = rs.getString(1);
+                o[2] = rs.getInt(2);
+                o[3] = rs.getString(3);
+                o[4] = rs.getString(4);
+                cont++;
+                System.out.println(o[1]);
                 
                 m.addRow(o);
             }

@@ -9,44 +9,48 @@ import javax.swing.table.TableColumn;
 public class SubmoduloReporteSalidas extends javax.swing.JPanel {
 
     DefaultTableModel m = new DefaultTableModel();
-    Controlador.detalleController salidasController= new detalleController();
+    Controlador.detalleController detController= new detalleController();
     
     public SubmoduloReporteSalidas() {
         initComponents();
         placeholders();
-        buscarEmpleado();
+        buscarSalida();
     }
 
     void placeholders(){
         Textp txte = new Textp("Buscar", txtBuscarSalida);
     }
     
-    void buscarEmpleado(){
+    void buscarSalida(){
         try {
-            m = salidasController.consultarEntradaSalida(txtBuscarSalida.getText(), "Salida");
+            String tipo = "Salida";
+            m = detController.consultarEntradaSalida(txtBuscarSalida.getText(), tipo);
             tablaReporteSalida.setModel(m);
             
-            //"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"
+            TableColumn t1 = tablaReporteSalida.getColumn("ID");
+            t1.setPreferredWidth(50);
+            t1.setMaxWidth(50);
+            t1.setMinWidth(50);
             
-            TableColumn t1 = tablaReporteSalida.getColumn("PRODUCTO");
-            t1.setPreferredWidth(230);
-            t1.setMaxWidth(230);
-            t1.setMinWidth(230);
+            TableColumn t2 = tablaReporteSalida.getColumn("PRODUCTO");
+            t2.setPreferredWidth(230);
+            t2.setMaxWidth(230);
+            t2.setMinWidth(230);
             
-            TableColumn t2 = tablaReporteSalida.getColumn("CANTIDAD");
-            t2.setPreferredWidth(100);
-            t2.setMaxWidth(200);
-            t2.setMinWidth(200);
+            TableColumn t3 = tablaReporteSalida.getColumn("CANTIDAD");
+            t3.setPreferredWidth(100);
+            t3.setMaxWidth(100);
+            t3.setMinWidth(100);
             
-            TableColumn t3 = tablaReporteSalida.getColumn("FECHA");
-            t3.setPreferredWidth(200);
-            t3.setMaxWidth(200);
-            t3.setMinWidth(200);
+            TableColumn t4 = tablaReporteSalida.getColumn("FECHA");
+            t4.setPreferredWidth(150);
+            t4.setMaxWidth(150);
+            t4.setMinWidth(150);
             
-            TableColumn t4 = tablaReporteSalida.getColumn("TRABAJADOR");
-            t4.setPreferredWidth(200);
-            t4.setMaxWidth(200);
-            t4.setMinWidth(200);
+            TableColumn t5 = tablaReporteSalida.getColumn("TRABAJADOR");
+            t5.setPreferredWidth(300);
+            t5.setMaxWidth(300);
+            t5.setMinWidth(300);
             
             tablaReporteSalida.setRowHeight(25);
         } catch (Exception e) {
@@ -215,9 +219,9 @@ public class SubmoduloReporteSalidas extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(Tabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 46, Short.MAX_VALUE))
         );
@@ -242,7 +246,7 @@ public class SubmoduloReporteSalidas extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarSalidaActionPerformed
 
     private void txtBuscarSalidaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarSalidaKeyTyped
-        buscarEmpleado();
+        buscarSalida();
     }//GEN-LAST:event_txtBuscarSalidaKeyTyped
 
 

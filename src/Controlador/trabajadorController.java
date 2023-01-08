@@ -2,7 +2,9 @@
 package Controlador;
 
 import DB.ConDB;
+import Modelo.rol;
 import Modelo.trabajador;
+import Modelo.usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,7 +65,8 @@ public class trabajadorController {
     }
     
     public int validarDuplicados(String dni){
-        int r = 0, cont = 0;
+        int cont = 0;
+        String r = "";
         
         String sql = "SELECT trabajador_DNI FROM trabajador WHERE trabajador_DNI=?";
         
@@ -73,10 +76,11 @@ public class trabajadorController {
             ps.setObject(1, dni);
             rs = ps.executeQuery();
             while(rs.next()){
-                r = rs.getInt(1);
-                if(r > 0){
+                r = rs.getString(1);
+                if(!r.isEmpty()){
                     cont++;
-                    r = 0;
+                    r = "";
+                    System.out.println(cont);
                 }
                     
             }
@@ -119,22 +123,32 @@ public class trabajadorController {
     
     //Mostrar los datos de trabajadores en tableModel
     public DefaultTableModel consultarTrabajador(String b){
-        String []titulos={"ID","DNI","NOMBRES","DIRECCION","ROL"};
+        String []titulos={"ID","DNI","NOMBRES","DIRECCION","ROL", "USUARIO"};
         DefaultTableModel m = new DefaultTableModel(null, titulos);
-        Object[] o = new Object[5];
+        Object[] o = new Object[6];
+        Modelo.usuario usuaModelo = new usuario();
+        Controlador.usuarioController usuaController = new usuarioController();
         
-        String sql = "SELECT t.trabajador_id, t.trabajador_DNI, t.trabajador_nombres, t.trabajador_direccion, r.rol_descripcion FROM trabajador t INNER JOIN rol r ON t.rol_id=r.rol_id WHERE (t.trabajador_id LIKE '%" + b + "%' OR t.trabajador_DNI LIKE '%" + b +"%' OR t.trabajador_nombres LIKE '%"+ b +"%' OR t.trabajador_direccion LIKE '%"+ b +"%' OR r.rol_descripcion LIKE '%" + b + "%')";
+        
+        
+        String sql = "SELECT t.trabajador_id, t.trabajador_DNI, t.trabajador_nombres, t.trabajador_direccion, r.rol_descripcion FROM trabajador t INNER JOIN rol r ON t.rol_id=r.rol_id WHERE t.trabajador_id LIKE '%" + b + "%' OR t.trabajador_DNI LIKE '%" + b +"%' OR t.trabajador_nombres LIKE '%"+ b +"%' OR t.trabajador_direccion LIKE '%"+ b +"%' OR r.rol_descripcion LIKE '%"+ b +"%'";
    
         try {
             acce = con.conectardb();
             ps = acce.prepareStatement(sql);
             rs = ps.executeQuery();
             while(rs.next()){
+                usuaModelo = usuaController.validarUsuarioTrabajador(rs.getInt(1));
                 o[0] = rs.getInt(1);
                 o[1] = rs.getString(2);
                 o[2] = rs.getString(3);
                 o[3] = rs.getString(4);
                 o[4] = rs.getString(5);
+                if(usuaModelo.getUsuario_user() == null){
+                    o[5] = "No asignado";
+                }else{
+                    o[5] = usuaModelo.getUsuario_user();
+                }
                 
                 m.addRow(o);
             }
@@ -187,6 +201,30 @@ public class trabajadorController {
         } catch (Exception e) {
             System.out.println("Error en combo Area: " + e);
         }
+    }
+    
+    //Validamos rol por trabajador.
+    public String validarTrabajadorRol(int idTrab){
+        Modelo.trabajador trabModelo = new trabajador();
+        String rol = "";
+        
+        String msql = "SELECT r.rol_descripcion FROM trabajador t INNER JOIN rol r ON t.rol_id=r.rol_id WHERE t.trabajador_id=?";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(msql);
+            ps.setInt(1, idTrab);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                rol = rs.getString(1);
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error al validar Rol del trabajador:  " + e);
+        }
+        
+        return rol;
     }
     
     

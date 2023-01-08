@@ -15,7 +15,7 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
     public SubmoduloReporteCambios() {
         initComponents();
         placeholders();
-        buscarEmpleado();
+        buscarCambios();
     }
     
     
@@ -23,7 +23,7 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
         Textp txte = new Textp("Buscar", txtBuscarCambios);
     }
     
-    void buscarEmpleado(){
+    void buscarCambios(){
         try {
             m = historialController.consultarCambios(txtBuscarCambios.getText());
             tablaHistorialCambios.setModel(m);
@@ -31,19 +31,19 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
             //"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"
             
             TableColumn t1 = tablaHistorialCambios.getColumn("ID");
-            t1.setPreferredWidth(100);
-            t1.setMaxWidth(100);
-            t1.setMinWidth(100);
+            t1.setPreferredWidth(50);
+            t1.setMaxWidth(50);
+            t1.setMinWidth(50);
             
             TableColumn t2 = tablaHistorialCambios.getColumn("DESCRIPCION");
-            t2.setPreferredWidth(230);
-            t2.setMaxWidth(230);
-            t2.setMinWidth(230);
+            t2.setPreferredWidth(330);
+            t2.setMaxWidth(330);
+            t2.setMinWidth(330);
             
             TableColumn t3 = tablaHistorialCambios.getColumn("FECHA");
-            t3.setPreferredWidth(200);
-            t3.setMaxWidth(200);
-            t3.setMinWidth(200);
+            t3.setPreferredWidth(150);
+            t3.setMaxWidth(150);
+            t3.setMinWidth(150);
             
             TableColumn t4 = tablaHistorialCambios.getColumn("TRABAJADOR");
             t4.setPreferredWidth(300);
@@ -219,9 +219,9 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
-                .addGap(40, 40, 40)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
                 .addComponent(Tabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 46, Short.MAX_VALUE))
         );
@@ -246,7 +246,7 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarCambiosActionPerformed
 
     private void txtBuscarCambiosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCambiosKeyTyped
-        buscarEmpleado();
+        buscarCambios();
     }//GEN-LAST:event_txtBuscarCambiosKeyTyped
 
 

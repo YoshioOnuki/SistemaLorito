@@ -19,7 +19,7 @@ public class Login extends javax.swing.JFrame {
     Controlador.usuarioController usuController = new usuarioController();
     Controlador.trabajadorController trabController = new trabajadorController();
     
-    public static String dniTrab, nombresTrab;
+    public static String dniTrab, nombresTrab, tipoRol;
     public static int rol;
     
 
@@ -47,9 +47,9 @@ public class Login extends javax.swing.JFrame {
             txtUsuario.requestFocus();
         }else{
             usuMod = usuController.validarUsuario(usu, cont);
-            if(usuMod.getUsuarioUser()!= null && usuMod.getUsuarioContra()!= null){
-                int idu = usuMod.getUsuarioID();
-                int idtraba = usuMod.getTrabajadorID();
+            if(usuMod.getUsuario_user()!= null && usuMod.getUsuario_contra()!= null){
+                int idu = usuMod.getUsuario_id();
+                int idtraba = usuMod.getTrabajador_id();
                 System.out.println("id usuario: " + idu);
                 System.out.println("id empleado: " + idtraba);
                 
@@ -64,6 +64,8 @@ public class Login extends javax.swing.JFrame {
                 } else {
                     System.out.println("Rol del trabajador: Trabajador");
                 }
+                
+                tipoRol = trabController.validarTrabajadorRol(idtraba);
                 
                 //Visualizar...
                 Principal prin = new Principal();

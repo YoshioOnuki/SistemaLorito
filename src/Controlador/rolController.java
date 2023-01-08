@@ -36,7 +36,7 @@ public class rolController {
         return r;
     }
     
-    //Validamos los campos del login...
+    //Validamos Rol
     public Modelo.rol validarRol(int idRol){
         Modelo.rol rolModelo = new rol();
         

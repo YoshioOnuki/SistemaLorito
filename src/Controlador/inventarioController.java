@@ -155,12 +155,12 @@ public class inventarioController {
     }
     
     //Mostrar los datos del inventario en una tabla
-    public DefaultTableModel consultarInventario(){
-        String [] encabe={"ID","DESCRIPCION","TIPO","PRECIO COMPRA","PRECIO VENTA","CANTIDAD","FECHA INGRESO","FECHA REGISTRO"};
+    public DefaultTableModel consultarInventario(String b){
+        String [] encabe={"ID","DESCRIPCION","TIPO","PRECIO COMPRA","PRECIO VENTA","CANTIDAD","FECHA REGISTRO"};
         DefaultTableModel m = new DefaultTableModel(null, encabe);
         Object[] o = new Object[8];
         
-        String sql = "SELECT inventario_id, inventario_nombre, tipo_id, inventario_precio_compra, inventario_precio_venta, inventario_cantidad, inventario_fecha_registro FROM inventario";
+        String sql = "SELECT i.inventario_id, i.inventario_nombre, t.tipo_descripcion, i.inventario_precio_compra, i.inventario_precio_venta, i.inventario_cantidad, i.inventario_fecha_registro FROM inventario i INNER JOIN tipo t ON i.tipo_id=t.tipo_id WHERE i.inventario_id LIKE '%" + b + "%' OR i.inventario_nombre LIKE '%" + b +"%' OR t.tipo_descripcion LIKE '%"+ b +"%' OR i.inventario_precio_compra LIKE '%"+ b +"%' OR i.inventario_precio_venta LIKE '%"+ b +"%' OR i.inventario_cantidad LIKE '%"+ b +"%' OR i.inventario_fecha_registro LIKE '%"+ b +"%'";
    
         try {
             acce = con.conectardb();
@@ -169,7 +169,7 @@ public class inventarioController {
             while(rs.next()){
                 o[0] = rs.getInt(1);
                 o[1] = rs.getString(2);
-                o[2] = rs.getInt(3);
+                o[2] = rs.getString(3);
                 o[3] = String.format("%.2f", rs.getDouble(4));
                 o[4] = String.format("%.2f", rs.getDouble(5));
                 o[5] = rs.getInt(6);

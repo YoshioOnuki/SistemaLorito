@@ -4,15 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloTrabajador.java</file>
-            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmodulosTrabajador.java</file>
-            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/Principal.java</file>
-            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmodulosAdmin.java</file>
+            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Modelo/historial_cambios.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Controlador/trabajadorController.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloReporteEntradas.java</file>
+            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloReporteInventario.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloReporteCambios.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Controlador/historialController.java</file>
-            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/Login.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloReporteSalidas.java</file>
+            <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Vista/SubmoduloTrabajadorAgregar.java</file>
             <file>file:/C:/Users/yoshi/OneDrive/Documentos/NetBeansProjects/SistemaLorito/src/Controlador/detalleController.java</file>
         </group>
     </open-files>

@@ -1,14 +1,94 @@
 
 package Vista;
 
+import Controlador.inventarioController;
+import Modelo.inventario;
 import java.awt.Color;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class SubmoduloReporteInventario extends javax.swing.JPanel {
     
+    DefaultTableModel m = new DefaultTableModel();
+    
+    Controlador.inventarioController inveController = new inventarioController();
+    
+    Modelo.inventario inveModelo = new inventario();
+
+    
     public SubmoduloReporteInventario() {
         initComponents();
+        placeholders();
+        buscarInventario();
     }
 
+    void placeholders(){
+        Textp txte = new Textp("Buscar", txtBuscarInventario);
+        titulo();
+    }
+    
+    void titulo(){
+        if(Login.tipoRol.equalsIgnoreCase("Administrador")){
+            lblTitulo.setText("");
+            lblTitulo.setText("REPORTE DE INVENTARIO");
+            btnNuevo.setVisible(false);
+            IconNuevo.setVisible(false);
+            IconNuevoHover.setVisible(false);
+        }else if(Login.tipoRol.equalsIgnoreCase("Trabajador")){
+            lblTitulo.setText("");
+            lblTitulo.setText("INVENTARIO");
+            btnNuevo.setVisible(true);
+            IconNuevo.setVisible(true);
+            IconNuevoHover.setVisible(true);
+        }
+    }
+    
+    void buscarInventario(){
+        try {
+            m = inveController.consultarInventario(txtBuscarInventario.getText());
+            tablaInven.setModel(m);
+            
+            TableColumn t1 = tablaInven.getColumn("ID");
+            t1.setPreferredWidth(50);
+            t1.setMaxWidth(50);
+            t1.setMinWidth(50);
+            
+            TableColumn t2 = tablaInven.getColumn("DESCRIPCION");
+            t2.setPreferredWidth(180);
+            t2.setMaxWidth(180);
+            t2.setMinWidth(180);
+            
+            TableColumn t3 = tablaInven.getColumn("TIPO");
+            t3.setPreferredWidth(150);
+            t3.setMaxWidth(150);
+            t3.setMinWidth(150);
+            
+            TableColumn t4 = tablaInven.getColumn("PRECIO COMPRA");
+            t4.setPreferredWidth(100);
+            t4.setMaxWidth(100);
+            t4.setMinWidth(100);
+            
+            TableColumn t5 = tablaInven.getColumn("PRECIO VENTA");
+            t5.setPreferredWidth(100);
+            t5.setMaxWidth(100);
+            t5.setMinWidth(100);
+            
+            TableColumn t6 = tablaInven.getColumn("CANTIDAD");
+            t6.setPreferredWidth(100);
+            t6.setMaxWidth(100);
+            t6.setMinWidth(100);
+            
+            TableColumn t7 = tablaInven.getColumn("FECHA REGISTRO");
+            t7.setPreferredWidth(150);
+            t7.setMaxWidth(150);
+            t7.setMinWidth(150);
+            
+            tablaInven.setRowHeight(25);
+        } catch (Exception e) {
+            System.out.println("Error al listar Inventario: " + e);
+        }
+    }
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -17,7 +97,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtBuscarInventario = new javax.swing.JTextField();
         btnNuevo = new javax.swing.JPanel();
@@ -89,8 +169,8 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jLabel1.setFont(new java.awt.Font("SF UI Display", 1, 20)); // NOI18N
-        jLabel1.setText("INVENTARIO");
+        lblTitulo.setFont(new java.awt.Font("SF UI Display", 1, 20)); // NOI18N
+        lblTitulo.setText("INVENTARIO");
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setMaximumSize(new java.awt.Dimension(190, 50));
@@ -194,14 +274,13 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
                 .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(500, 500, 500)
-                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(70, 70, 70))
         );
         layout.setVerticalGroup(
@@ -209,7 +288,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jLabel1)
+                .addComponent(lblTitulo)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -239,7 +318,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarInventarioActionPerformed
 
     private void txtBuscarInventarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarInventarioKeyTyped
-        //buscarTrabajador();
+        buscarInventario();
     }//GEN-LAST:event_txtBuscarInventarioKeyTyped
 
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
@@ -270,10 +349,10 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     private javax.swing.JScrollPane Tabla;
     private javax.swing.JPanel btnExit;
     private javax.swing.JPanel btnNuevo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tablaInven;
     private javax.swing.JTextField txtBuscarInventario;
     // End of variables declaration//GEN-END:variables

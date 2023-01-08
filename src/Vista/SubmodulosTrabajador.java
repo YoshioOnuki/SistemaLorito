@@ -1,6 +1,9 @@
 
 package Vista;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 public class SubmodulosTrabajador extends javax.swing.JPanel {
 
     public SubmodulosTrabajador() {
@@ -84,7 +87,14 @@ public class SubmodulosTrabajador extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTrabajadoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrabajadoresActionPerformed
-
+        SubmoduloReporteInventario mInventario = new SubmoduloReporteInventario();
+        
+        mInventario.setSize(new Dimension(970, 550));
+        mInventario.setLocation(0,0);
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mInventario,BorderLayout.CENTER);
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
     }//GEN-LAST:event_btnTrabajadoresActionPerformed
 
     private void btnReporteIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteIngresoActionPerformed

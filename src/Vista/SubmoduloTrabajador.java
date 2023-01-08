@@ -2,6 +2,8 @@
 package Vista;
 
 import Controlador.trabajadorController;
+import Controlador.usuarioController;
+import Modelo.usuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,13 +16,16 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
 
     DefaultTableModel m = new DefaultTableModel();
     Controlador.trabajadorController trabController= new trabajadorController();
+    Controlador.usuarioController usuaController = new usuarioController();
+    Modelo.usuario usuaModelo = new usuario();
     
-    public static int tipoCRUD, idTrabajador;
+    public static int tipoCRUD, tipoUsua, idTrabajador;
+    public static String nombress;
     
     public SubmoduloTrabajador() {
         initComponents();
         placeholders();
-        buscarEmpleado();
+        buscarTrabajador();
     }
 
     
@@ -28,7 +33,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         Textp txte = new Textp("Buscar", txtBuscarTrabajador);
     }
     
-    void buscarEmpleado(){
+    void buscarTrabajador(){
         try {
             m = trabController.consultarTrabajador(txtBuscarTrabajador.getText());
             tablaTrab.setModel(m);
@@ -49,14 +54,19 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
             t3.setMinWidth(240);
             
             TableColumn t4 = tablaTrab.getColumn("DIRECCION");
-            t4.setPreferredWidth(290);
-            t4.setMaxWidth(290);
-            t4.setMinWidth(290);
+            t4.setPreferredWidth(240);
+            t4.setMaxWidth(240);
+            t4.setMinWidth(240);
             
             TableColumn t5 = tablaTrab.getColumn("ROL");
-            t5.setPreferredWidth(150);
-            t5.setMaxWidth(150);
-            t5.setMinWidth(150);
+            t5.setPreferredWidth(110);
+            t5.setMaxWidth(110);
+            t5.setMinWidth(110);
+            
+            TableColumn t6 = tablaTrab.getColumn("USUARIO");
+            t5.setPreferredWidth(90);
+            t5.setMaxWidth(90);
+            t5.setMinWidth(90);
             
             tablaTrab.setRowHeight(25);
         } catch (Exception e) {
@@ -73,8 +83,8 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
             
             if(opc == 1){
                 idTrabajador = Integer.parseInt(tablaTrab.getValueAt(fila, 0).toString());
-                
                 tipoCRUD = 2;
+                
                 Vista.SubmoduloTrabajadorAgregar mTrabAgr = new Vista.SubmoduloTrabajadorAgregar();
 
                 mTrabAgr.setSize(970, 550);
@@ -84,7 +94,41 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
                 Principal.PanelPrincipal.revalidate();
                 Principal.PanelPrincipal.repaint();
             }else if(opc == 2){
+                idTrabajador = Integer.parseInt(tablaTrab.getValueAt(fila, 0).toString());
+                nombress = tablaTrab.getValueAt(fila, 2).toString();
+                tipoUsua = 1;
+                usuaModelo = usuaController.validarUsuarioTrabajador(idTrabajador);
                 
+                if(usuaModelo.getUsuario_user()!= null){
+                    JOptionPane.showMessageDialog(null, "El Trabajador seleccionado ya cuenta usuario");
+                }else{
+                    Vista.SubmoduloTrabajadorUsuario mTrabUsua = new Vista.SubmoduloTrabajadorUsuario();
+
+                    mTrabUsua.setSize(970, 550);
+                    mTrabUsua.setLocation(0, 0);
+                    Principal.PanelPrincipal.removeAll();
+                    Principal.PanelPrincipal.add(mTrabUsua, BorderLayout.CENTER);
+                    Principal.PanelPrincipal.revalidate();
+                    Principal.PanelPrincipal.repaint();
+                }
+                
+            }else if(opc == 3){
+                idTrabajador = Integer.parseInt(tablaTrab.getValueAt(fila, 0).toString());
+                nombress = tablaTrab.getValueAt(fila, 2).toString();
+                tipoUsua = 2;
+                usuaModelo = usuaController.validarUsuarioTrabajador(idTrabajador);
+                if(usuaModelo.getUsuario_user()== null){
+                    JOptionPane.showMessageDialog(null, "El Trabajador seleccionado no tiene usuario asignado");
+                }else{
+                    Vista.SubmoduloTrabajadorUsuario mTrabUsua = new Vista.SubmoduloTrabajadorUsuario();
+
+                    mTrabUsua.setSize(970, 550);
+                    mTrabUsua.setLocation(0, 0);
+                    Principal.PanelPrincipal.removeAll();
+                    Principal.PanelPrincipal.add(mTrabUsua, BorderLayout.CENTER);
+                    Principal.PanelPrincipal.revalidate();
+                    Principal.PanelPrincipal.repaint(); 
+                }
             }
         }
     }
@@ -98,6 +142,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         menuTrab = new javax.swing.JPopupMenu();
         actualizar = new javax.swing.JMenuItem();
         asignarUsuario = new javax.swing.JMenuItem();
+        actualizarUsuario = new javax.swing.JMenuItem();
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -119,8 +164,23 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         });
         menuTrab.add(actualizar);
 
+        asignarUsuario.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
         asignarUsuario.setText("Asignar Usuario");
+        asignarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                asignarUsuarioActionPerformed(evt);
+            }
+        });
         menuTrab.add(asignarUsuario);
+
+        actualizarUsuario.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
+        actualizarUsuario.setText("Actualizar Usuario");
+        actualizarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarUsuarioActionPerformed(evt);
+            }
+        });
+        menuTrab.add(actualizarUsuario);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(970, 550));
@@ -292,15 +352,13 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Tabla, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(500, 500, 500)
-                                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1)
+                                    .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(70, 70, 70)))
                 .addGap(0, 0, 0))
         );
@@ -339,7 +397,7 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarTrabajadorActionPerformed
 
     private void txtBuscarTrabajadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarTrabajadorKeyTyped
-        buscarEmpleado();
+        buscarTrabajador();
     }//GEN-LAST:event_txtBuscarTrabajadorKeyTyped
 
     private void btnNuevoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNuevoMouseClicked
@@ -368,12 +426,21 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         OpcTrab(1);
     }//GEN-LAST:event_actualizarActionPerformed
 
+    private void asignarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asignarUsuarioActionPerformed
+        OpcTrab(2);
+    }//GEN-LAST:event_asignarUsuarioActionPerformed
+
+    private void actualizarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarUsuarioActionPerformed
+        OpcTrab(3);
+    }//GEN-LAST:event_actualizarUsuarioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconNuevo;
     private javax.swing.JLabel IconNuevoHover;
     private javax.swing.JScrollPane Tabla;
     private javax.swing.JMenuItem actualizar;
+    private javax.swing.JMenuItem actualizarUsuario;
     private javax.swing.JMenuItem asignarUsuario;
     private javax.swing.JPanel btnExit;
     private javax.swing.JPanel btnNuevo;

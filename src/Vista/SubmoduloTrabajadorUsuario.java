@@ -1,95 +1,66 @@
 
 package Vista;
 
-import Controlador.rolController;
-import Controlador.trabajadorController;
 import Controlador.usuarioController;
-import Modelo.rol;
-import Modelo.trabajador;
 import Modelo.usuario;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
-public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
-    
-    Controlador.trabajadorController trabController= new trabajadorController();
-    Controlador.rolController rolController= new rolController();
-    
-    Modelo.trabajador trabModelo = new trabajador();
-    Modelo.rol rolModelo = new rol();
 
-    public SubmoduloTrabajadorAgregar() {
+public class SubmoduloTrabajadorUsuario extends javax.swing.JPanel {
+    
+    Controlador.usuarioController usuaController = new usuarioController();
+    Modelo.usuario usuaModelo = new usuario();
+
+    public SubmoduloTrabajadorUsuario() {
         initComponents();
-        cargarCboRol();
         titulo();
     }
     
     
-    void cargarCboRol(){
-        trabController.cargarComboRol(cboRol);
-    }
-    
     void titulo(){
-        if(SubmoduloTrabajador.tipoCRUD == 1){
+        if(SubmoduloTrabajador.tipoUsua == 1){
             lblTitulo.setText("");
-            lblTitulo.setText("AGREGAR TRABAJADOR");
-            genCOD();
-        }else if(SubmoduloTrabajador.tipoCRUD == 2){
+            lblTitulo.setText("ASIGNAR USUARIO  -  " + SubmoduloTrabajador.nombress.toUpperCase());
+        }else if(SubmoduloTrabajador.tipoUsua == 2){
             lblTitulo.setText("");
-            lblTitulo.setText("ACTUALIZAR TRABAJADOR");
-            cargarDatosActualizar();
+            lblTitulo.setText("ACTUALIZAR USUARIO " + SubmoduloTrabajador.nombress);
+            cargarDatos();
         }
-    }
-
-    void genCOD(){
-        int id = trabController.ultimoIdTrabajador();
-        txtID.setText("" + (id+1));
     }
     
     //Cargar DAtos
-    void cargarDatosActualizar(){
+    void cargarDatos(){
         int idTrab = SubmoduloTrabajador.idTrabajador; 
         System.out.println("idTrabajador " + idTrab);
-        trabModelo = trabController.validarTrabajador(idTrab);
+        usuaModelo = usuaController.validarUsuarioTrabajador(idTrab);
         
-        txtID.setText(""+ trabModelo.getTrabajadorID());
-        txtDni.setText(""+ trabModelo.getTrabajador_DNI());
-        txtNombres.setText(trabModelo.getTrabajadorNombres());
-        txtDireccion.setText(trabModelo.getTrabajadorDireccion());
-        rolModelo = rolController.validarRol(trabModelo.getRolID());
-        cboRol.setSelectedItem(rolModelo.getRolDescripcion());
+        txtUsuario.setText(""+ usuaModelo.getUsuario_user());
     }
     
-    void agregarTrabajador(){
-        if(txtDni.getText().equals("") || txtNombres.getText().equals("") ||txtDireccion.getText().equals("") || cboRol.getSelectedIndex()==0 ){
+     void agregarUsuarioTrabajador(){
+        if(txtUsuario.getText().equals("") || txtUsuario.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Campos de textos vacios");
-            txtDni.requestFocus();
         }else{
+            String usuario = txtUsuario.getText();
+            String pass = txtContrasenia.getText();
+            int id = SubmoduloTrabajador.idTrabajador;
             
-            String dni = txtDni.getText();
-            String nom = txtNombres.getText();
-            String direc = txtDireccion.getText();
-            int rol = rolController.idRol(cboRol.getSelectedItem().toString());
-            
-            if(trabController.validarDuplicados(dni) > 0){
-                JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe");
+            if(usuaController.validarDuplicados(usuario) > 0){
+                JOptionPane.showMessageDialog(null, "El Usuario ingresado ya existe");
             }else{
                 Object[] ob = new Object[4];
 
-                ob[0] = dni;
-                ob[1] = nom;
-                ob[2] = direc;
-                ob[3] = rol;
+                ob[0] = usuario;
+                ob[1] = pass;
+                ob[2] = 1;
+                ob[3] = id;
 
-                int respuesta = trabController.addTrabajador(ob);
+                int respuesta = usuaController.addUsuario(ob);
 
                 if(respuesta>0){
-                    JOptionPane.showMessageDialog(null, "Datos del trabajador ingresados correctamente");
+                    JOptionPane.showMessageDialog(null, "Datos de Usuario ingresados correctamente");
                 }
 
                 Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
@@ -101,40 +72,33 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 Principal.PanelPrincipal.revalidate();
                 Principal.PanelPrincipal.repaint();
             }
-            
-            
         }
     }
     
-    void actualizarTrabajador(){
-        if(txtDni.getText().equals("") || txtNombres.getText().equals("") ||txtDireccion.getText().equals("") || cboRol.getSelectedIndex()==0 ){
+    void actualizarUsuarioTrabajador(){
+        if(txtUsuario.getText().equals("") || txtUsuario.getText().equals("")){
             JOptionPane.showMessageDialog(null, "Campos de textos vacios");
-            txtDni.requestFocus();
         }else{
+            String usuario = txtUsuario.getText();
+            String pass = txtContrasenia.getText();
+            int id = SubmoduloTrabajador.idTrabajador;
+            usuaModelo = usuaController.validarUsuarioTrabajador(id);
             
-            int id = Integer.parseInt(txtID.getText());
-            String dni = txtDni.getText();
-            String nom = txtNombres.getText();
-            String direc = txtDireccion.getText();
-            int rol = rolController.idRol(cboRol.getSelectedItem().toString());
-            trabModelo = trabController.validarTrabajador(id);
-            
-            if(dni.equalsIgnoreCase(trabModelo.getTrabajador_DNI())){
-                System.out.println(dni);
-                if(trabController.validarDuplicados(dni) > 1){
-                    JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe");
+            if(usuario.equalsIgnoreCase(usuaModelo.getUsuario_user())){
+                System.out.println(usuario);
+                if(usuaController.validarDuplicados(usuario) > 1){
+                    JOptionPane.showMessageDialog(null, "El Usuario ingresado ya existe");
                 }else{
-                    Object[] ob = new Object[5];
-                    ob[0] = dni;
-                    ob[1] = nom;
-                    ob[2] = direc;
-                    ob[3] = rol;
-                    ob[4] = id;
+                    Object[] ob = new Object[4];
 
-                    int respuesta = trabController.updateTrabajador(ob);
+                    ob[0] = usuario;
+                    ob[1] = pass;
+                    ob[2] = id;
+
+                    int respuesta = usuaController.updateUsuario(ob);
 
                     if(respuesta>0){
-                        JOptionPane.showMessageDialog(null, "Datos del trabajador actualizadoos correctamente");
+                        JOptionPane.showMessageDialog(null, "Datos de Usuario actualizados correctamente");
                     }
 
                     Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
@@ -146,20 +110,19 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                     Principal.PanelPrincipal.revalidate();
                     Principal.PanelPrincipal.repaint();
                 }
-            }else if(trabController.validarDuplicados(dni) > 0){
-                JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe");
+            }else if(usuaController.validarDuplicados(usuario) > 0){
+                JOptionPane.showMessageDialog(null, "El Usuario ingresado ya existe");
             }else{
-                Object[] ob = new Object[5];
-                ob[0] = dni;
-                ob[1] = nom;
-                ob[2] = direc;
-                ob[3] = rol;
-                ob[4] = id;
+                Object[] ob = new Object[4];
 
-                int respuesta = trabController.updateTrabajador(ob);
+                ob[0] = usuario;
+                ob[1] = pass;
+                ob[2] = id;
+
+                int respuesta = usuaController.updateUsuario(ob);
 
                 if(respuesta>0){
-                    JOptionPane.showMessageDialog(null, "Datos del trabajador actualizadoos correctamente");
+                    JOptionPane.showMessageDialog(null, "Datos de Usuario actualizados correctamente");
                 }
 
                 Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
@@ -170,40 +133,59 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 Principal.PanelPrincipal.add(mTrab, BorderLayout.CENTER);
                 Principal.PanelPrincipal.revalidate();
                 Principal.PanelPrincipal.repaint();
-            }
+            }  
+            
         }
     }
-
     
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitulo = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txtUsuario = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtContrasenia = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        lblTitulo = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JPanel();
         IconRegresar = new javax.swing.JLabel();
         IconRegresarHover = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtDni = new javax.swing.JTextField();
-        txtNombres = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtDireccion = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        cboRol = new javax.swing.JComboBox<>();
         btnGuardar = new javax.swing.JPanel();
         IconGuardar = new javax.swing.JLabel();
         IconGuardarHover = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(970, 550));
         setMinimumSize(new java.awt.Dimension(970, 550));
         setPreferredSize(new java.awt.Dimension(970, 550));
+
+        lblTitulo.setFont(new java.awt.Font("SF UI Display", 1, 20)); // NOI18N
+        lblTitulo.setText("ASIGNAR USUARIO");
+
+        jLabel7.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
+        jLabel7.setText("Usuario:");
+
+        txtUsuario.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
+        txtUsuario.setMaximumSize(new java.awt.Dimension(270, 30));
+        txtUsuario.setMinimumSize(new java.awt.Dimension(270, 30));
+        txtUsuario.setPreferredSize(new java.awt.Dimension(270, 30));
+
+        jLabel2.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
+        jLabel2.setText("Contraseña:");
+
+        txtContrasenia.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
+        txtContrasenia.setMaximumSize(new java.awt.Dimension(270, 30));
+        txtContrasenia.setMinimumSize(new java.awt.Dimension(270, 30));
+        txtContrasenia.setPreferredSize(new java.awt.Dimension(270, 30));
+        txtContrasenia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtContraseniaKeyTyped(evt);
+            }
+        });
 
         jPanel6.setBackground(new java.awt.Color(53, 66, 89));
         jPanel6.setMaximumSize(new java.awt.Dimension(970, 25));
@@ -264,14 +246,10 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        lblTitulo.setFont(new java.awt.Font("SF UI Display", 1, 20)); // NOI18N
-        lblTitulo.setText("AGREGAR TRABAJADOR");
-
         btnRegresar.setBackground(new java.awt.Color(255, 255, 255));
         btnRegresar.setMaximumSize(new java.awt.Dimension(115, 42));
         btnRegresar.setMinimumSize(new java.awt.Dimension(115, 42));
         btnRegresar.setName(""); // NOI18N
-        btnRegresar.setPreferredSize(new java.awt.Dimension(115, 42));
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegresarMouseClicked(evt);
@@ -308,43 +286,6 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
             .addGroup(btnRegresarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(IconRegresarHover, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
         );
-
-        jLabel2.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        jLabel2.setText("DNI:");
-
-        jLabel3.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        jLabel3.setText("Nombres:");
-
-        txtDni.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        txtDni.setMaximumSize(new java.awt.Dimension(270, 30));
-        txtDni.setMinimumSize(new java.awt.Dimension(270, 30));
-        txtDni.setPreferredSize(new java.awt.Dimension(270, 30));
-        txtDni.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDniKeyTyped(evt);
-            }
-        });
-
-        txtNombres.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        txtNombres.setMaximumSize(new java.awt.Dimension(270, 30));
-        txtNombres.setMinimumSize(new java.awt.Dimension(270, 30));
-        txtNombres.setPreferredSize(new java.awt.Dimension(270, 30));
-
-        jLabel4.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        jLabel4.setText("Dirección:");
-
-        txtDireccion.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        txtDireccion.setMaximumSize(new java.awt.Dimension(270, 30));
-        txtDireccion.setMinimumSize(new java.awt.Dimension(270, 30));
-        txtDireccion.setPreferredSize(new java.awt.Dimension(270, 30));
-
-        jLabel5.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        jLabel5.setText("Rol:");
-
-        cboRol.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        cboRol.setMaximumSize(new java.awt.Dimension(270, 30));
-        cboRol.setMinimumSize(new java.awt.Dimension(270, 30));
-        cboRol.setPreferredSize(new java.awt.Dimension(270, 30));
 
         btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         btnGuardar.setMaximumSize(new java.awt.Dimension(115, 42));
@@ -388,58 +329,36 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 .addComponent(IconGuardarHover, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
         );
 
-        jLabel7.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        jLabel7.setText("ID:");
-
-        txtID.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
-        txtID.setEnabled(false);
-        txtID.setMaximumSize(new java.awt.Dimension(270, 30));
-        txtID.setMinimumSize(new java.awt.Dimension(270, 30));
-        txtID.setPreferredSize(new java.awt.Dimension(270, 30));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitulo)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(cboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(70, 70, 70)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTitulo)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addGap(44, 44, 44)
-                                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(123, Short.MAX_VALUE))))
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,40 +369,16 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboRol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                    .addComponent(txtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(259, 259, 259)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
+                .addGap(0, 60, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
-        Principal.PanelPrincipal.removeAll();
-        Principal.PanelPrincipal.revalidate();
-        Principal.PanelPrincipal.repaint();
-    }//GEN-LAST:event_btnExitMouseClicked
-
-    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
-        btnExit.setBackground(new Color(237, 19, 19));
-    }//GEN-LAST:event_btnExitMouseEntered
-
-    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
-        btnExit.setBackground(new Color(53,66,89));
-    }//GEN-LAST:event_btnExitMouseExited
 
     private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
         Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
@@ -506,12 +401,30 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
         IconRegresarHover.setVisible(false);
     }//GEN-LAST:event_btnRegresarMouseExited
 
+    private void txtContraseniaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContraseniaKeyTyped
+        
+    }//GEN-LAST:event_txtContraseniaKeyTyped
+
+    private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.revalidate();
+        Principal.PanelPrincipal.repaint();
+    }//GEN-LAST:event_btnExitMouseClicked
+
+    private void btnExitMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseEntered
+        btnExit.setBackground(new Color(237, 19, 19));
+    }//GEN-LAST:event_btnExitMouseEntered
+
+    private void btnExitMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseExited
+        btnExit.setBackground(new Color(53,66,89));
+    }//GEN-LAST:event_btnExitMouseExited
+
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        if(SubmoduloTrabajador.tipoCRUD==1){
-            agregarTrabajador();
-        }else if(SubmoduloTrabajador.tipoCRUD==2){
-            actualizarTrabajador();
-        }      
+        if(SubmoduloTrabajador.tipoUsua==1){
+            agregarUsuarioTrabajador();
+        }else if(SubmoduloTrabajador.tipoUsua==2){
+            actualizarUsuarioTrabajador();
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseEntered
@@ -524,16 +437,6 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
         IconGuardarHover.setVisible(false);
     }//GEN-LAST:event_btnGuardarMouseExited
 
-    private void txtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniKeyTyped
-        char c = evt.getKeyChar();
-        if(c<'0' || c>'9'){
-            evt.consume();
-        }
-        if(txtDni.getText().length() >= 8){
-            evt.consume();
-        }
-    }//GEN-LAST:event_txtDniKeyTyped
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconGuardar;
@@ -543,18 +446,12 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
     private javax.swing.JPanel btnExit;
     private javax.swing.JPanel btnGuardar;
     private javax.swing.JPanel btnRegresar;
-    private javax.swing.JComboBox<String> cboRol;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtDni;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtNombres;
+    private javax.swing.JTextField txtContrasenia;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

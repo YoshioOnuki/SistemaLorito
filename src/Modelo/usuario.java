@@ -12,53 +12,56 @@ public class usuario {
     public usuario() {
     }
 
-    public usuario(int usuarioID, String usuarioUser, String usuarioContra, int usuarioEstado, int trabajadorID) {
-        this.usuario_id = usuarioID;
-        this.usuario_user = usuarioUser;
-        this.usuario_contra = usuarioContra;
-        this.usuario_estado = usuarioEstado;
-        this.trabajador_id = trabajadorID;
+    public usuario(int usuario_id, String usuario_user, String usuario_contra, int usuario_estado, int trabajador_id) {
+        this.usuario_id = usuario_id;
+        this.usuario_user = usuario_user;
+        this.usuario_contra = usuario_contra;
+        this.usuario_estado = usuario_estado;
+        this.trabajador_id = trabajador_id;
     }
 
-    public int getUsuarioID() {
+    public int getUsuario_id() {
         return usuario_id;
     }
 
-    public void setUsuarioID(int usuarioID) {
-        this.usuario_id = usuarioID;
+    public void setUsuario_id(int usuario_id) {
+        this.usuario_id = usuario_id;
     }
 
-    public String getUsuarioUser() {
+    public String getUsuario_user() {
         return usuario_user;
     }
 
-    public void setUsuarioUser(String usuarioUser) {
-        this.usuario_user = usuarioUser;
+    public void setUsuario_user(String usuario_user) {
+        this.usuario_user = usuario_user;
     }
 
-    public String getUsuarioContra() {
+    public String getUsuario_contra() {
         return usuario_contra;
     }
 
-    public void setUsuarioContra(String usuarioContra) {
-        this.usuario_contra = usuarioContra;
+    public void setUsuario_contra(String usuario_contra) {
+        this.usuario_contra = usuario_contra;
     }
 
-    public int getUsuarioEstado() {
+    public int getUsuario_estado() {
         return usuario_estado;
     }
 
-    public void setUsuarioEstado(int usuarioEstado) {
-        this.usuario_estado = usuarioEstado;
+    public void setUsuario_estado(int usuario_estado) {
+        this.usuario_estado = usuario_estado;
     }
 
-    public int getTrabajadorID() {
+    public int getTrabajador_id() {
         return trabajador_id;
     }
 
-    public void setTrabajadorID(int trabajadorID) {
-        this.trabajador_id = trabajadorID;
+    public void setTrabajador_id(int trabajador_id) {
+        this.trabajador_id = trabajador_id;
     }
+
+    
+
     
     
 }
