@@ -20,7 +20,7 @@ public class inventarioController {
     //Ingresamos inventario
     public int addInventario(Object[] ob) {
         int r = 0;
-        String sql = "INSERT INTO inventario(inventario_nombre, inventario_precio_compra, inventario_precio_venta, inventario_cantidad, inventario_fecha_registro, tipo_id) VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO inventario(inventario_nombre, inventario_precio_compra, inventario_precio_venta, inventario_cantidad, inventario_fecha_registro, inventario_estado, tipo_id) VALUES(?,?,?,?,?,?,?)";
         
         try {
             acce = con.conectardb();
@@ -31,6 +31,7 @@ public class inventarioController {
             ps.setObject(4, ob[3]);
             ps.setObject(5, ob[4]);
             ps.setObject(6, ob[5]);
+            ps.setObject(7, ob[6]);
             r = ps.executeUpdate();
             
             acce.close();
@@ -86,21 +87,22 @@ public class inventarioController {
         return r;
     }
     
-    //Eliminando inventario
-    public int deleteInventario(int inventarioID) {
+    //Cambiamos de estado al inventario
+    public int cambiarEstadoInventario(int inventarioID, int estado) {
         int r = 0;
         
-        String sql = "DELETE FROM inventario WHERE inventario_id=?";
+        String sql = "UPDATE inventario SET inventario_estado=? WHERE inventario_id=?";
         
         try {
             acce = con.conectardb();
             ps = acce.prepareStatement(sql);
-            ps.setObject(1, inventarioID);
+            ps.setObject(1, estado);
+            ps.setObject(2, inventarioID);
             r = ps.executeUpdate();
             
             acce.close();
         } catch (Exception e) {
-            System.out.println("Error al Eliminar inventario: "+ inventarioID + ": " + e);
+            System.out.println("Error al cambiar estado de inventario: "+ inventarioID + ": " + e);
         }
         
         return r;
@@ -118,13 +120,44 @@ public class inventarioController {
             ps.setInt(1, idInven);
             rs = ps.executeQuery();
             while(rs.next()){
-                entInventario.setInventarioID(rs.getInt(1));
-                entInventario.setInventarioNombre(rs.getString(2));
-                entInventario.setInventarioPrecioCompra(rs.getDouble(3));
-                entInventario.setInventarioPrecioVenta(rs.getDouble(4));
-                entInventario.setInventarioCantidad(rs.getInt(5));
-                entInventario.setInventarioFechaRegistro(rs.getString(6));
-                entInventario.setTipoID(rs.getInt(7));
+                entInventario.setInventario_id(rs.getInt(1));
+                entInventario.setInventario_nombre(rs.getString(2));
+                entInventario.setInventario_precio_compra(rs.getDouble(3));
+                entInventario.setInventario_precio_venta(rs.getDouble(4));
+                entInventario.setInventario_cantidad(rs.getInt(5));
+                entInventario.setInventario_fecha_registro(rs.getString(6));
+                entInventario.setInventario_estado(rs.getInt(7));
+                entInventario.setTipo_id(rs.getInt(8));
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error al validar Inventario:  " + e);
+        }
+        
+        return entInventario;
+    }
+    
+    //Validamos el inventario por nombre
+    public Modelo.inventario validarInventarioPorNombre(String nombre){
+        Modelo.inventario entInventario = new inventario();
+        
+        String msql = "SELECT * FROM inventario WHERE inventario_nombre=?";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(msql);
+            ps.setString(1, nombre);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                entInventario.setInventario_id(rs.getInt(1));
+                entInventario.setInventario_nombre(rs.getString(2));
+                entInventario.setInventario_precio_compra(rs.getDouble(3));
+                entInventario.setInventario_precio_venta(rs.getDouble(4));
+                entInventario.setInventario_cantidad(rs.getInt(5));
+                entInventario.setInventario_fecha_registro(rs.getString(6));
+                entInventario.setInventario_estado(rs.getInt(7));
+                entInventario.setTipo_id(rs.getInt(8));
             }
             
             acce.close();
@@ -161,7 +194,7 @@ public class inventarioController {
         DefaultTableModel m = new DefaultTableModel(null, encabe);
         Object[] o = new Object[8];
         
-        String sql = "SELECT i.inventario_id, i.inventario_nombre, t.tipo_descripcion, i.inventario_precio_compra, i.inventario_precio_venta, i.inventario_cantidad, i.inventario_fecha_registro FROM inventario i INNER JOIN tipo t ON i.tipo_id=t.tipo_id WHERE i.inventario_id LIKE '%" + b + "%' OR i.inventario_nombre LIKE '%" + b +"%' OR t.tipo_descripcion LIKE '%"+ b +"%' OR i.inventario_precio_compra LIKE '%"+ b +"%' OR i.inventario_precio_venta LIKE '%"+ b +"%' OR i.inventario_cantidad LIKE '%"+ b +"%' OR i.inventario_fecha_registro LIKE '%"+ b +"%'";
+        String sql = "SELECT i.inventario_id, i.inventario_nombre, t.tipo_descripcion, i.inventario_precio_compra, i.inventario_precio_venta, i.inventario_cantidad, i.inventario_fecha_registro FROM inventario i INNER JOIN tipo t ON i.tipo_id=t.tipo_id WHERE i.inventario_estado=1 AND (i.inventario_id LIKE '%" + b + "%' OR i.inventario_nombre LIKE '%" + b +"%' OR t.tipo_descripcion LIKE '%"+ b +"%' OR i.inventario_precio_compra LIKE '%"+ b +"%' OR i.inventario_precio_venta LIKE '%"+ b +"%' OR i.inventario_cantidad LIKE '%"+ b +"%' OR i.inventario_fecha_registro LIKE '%"+ b +"%') ORDER BY 1 ASC";
    
         try {
             acce = con.conectardb();
@@ -185,5 +218,25 @@ public class inventarioController {
         }
 
         return m;
+    }
+    
+    public void cargarComboInven(JComboBox cbo){
+        String sql = "SELECT inventario_nombre FROM inventario";
+        
+        try {
+            acce = con.conectardb();
+            ps = acce.prepareStatement(sql);
+            rs = ps.executeQuery();
+            cbo.removeAllItems();
+            cbo.addItem("Seleccione");
+            
+            while(rs.next()){
+                cbo.addItem(rs.getString(1));
+            }
+            
+            acce.close();
+        } catch (Exception e) {
+            System.out.println("Error en combo Inventario: " + e);
+        }
     }
 }

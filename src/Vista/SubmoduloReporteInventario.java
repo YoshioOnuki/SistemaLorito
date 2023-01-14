@@ -3,8 +3,13 @@ package Vista;
 
 import Controlador.inventarioController;
 import Modelo.inventario;
+import static Vista.SubmoduloTrabajador.idTrabajador;
+import static Vista.SubmoduloTrabajador.nombress;
+import static Vista.SubmoduloTrabajador.tipoCRUD;
+import static Vista.SubmoduloTrabajador.tipoUsua;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -16,7 +21,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     
     Modelo.inventario inveModelo = new inventario();
     
-    public static int tipoCRUD;
+    public static int tipoCRUD, idInven;
 
     
     public SubmoduloReporteInventario() {
@@ -92,11 +97,50 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
         }
     }
     
+    void opcInventario(int opc){
+        int fila = tablaInven.getSelectedRow();
+        if(fila == -1){
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }else{            
+            if(opc == 1){
+                inveModelo = inveController.validarInventario(Integer.parseInt(tablaInven.getValueAt(fila, 0).toString()));
+                idInven = inveModelo.getInventario_id();
+                System.out.println(idInven);
+                tipoCRUD = 2;
+                
+                Vista.SubmoduloInventarioAgregar mInvenAgr = new Vista.SubmoduloInventarioAgregar();
+
+                mInvenAgr.setSize(970, 550);
+                mInvenAgr.setLocation(0, 0);
+                Principal.PanelPrincipal.removeAll();
+                Principal.PanelPrincipal.add(mInvenAgr, BorderLayout.CENTER);
+                Principal.PanelPrincipal.revalidate();
+                Principal.PanelPrincipal.repaint();
+            }else if(opc == 2){
+                inveModelo = inveController.validarInventario(Integer.parseInt(tablaInven.getValueAt(fila, 0).toString()));
+                idInven = inveModelo.getInventario_id();
+                System.out.println(idInven);
+                int estado = 0;
+
+                System.out.println(idInven);
+                int respuesta = inveController.cambiarEstadoInventario(idInven, estado);
+                
+                if(respuesta > 0){
+                    JOptionPane.showMessageDialog(null, "Inventario seleccionado fue eliminado");
+                }
+                buscarInventario();
+            }
+        }
+    }
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuInventario = new javax.swing.JPopupMenu();
+        actualizar = new javax.swing.JMenuItem();
+        eliminar = new javax.swing.JMenuItem();
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -108,6 +152,24 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
         IconNuevoHover = new javax.swing.JLabel();
         Tabla = new javax.swing.JScrollPane();
         tablaInven = new javax.swing.JTable();
+
+        actualizar.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
+        actualizar.setText("Actualizar");
+        actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarActionPerformed(evt);
+            }
+        });
+        menuInventario.add(actualizar);
+
+        eliminar.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
+        eliminar.setText("Eliminar");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
+        menuInventario.add(eliminar);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(970, 550));
@@ -266,6 +328,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
 
             }
         ));
+        tablaInven.setComponentPopupMenu(menuInventario);
         Tabla.setViewportView(tablaInven);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -347,17 +410,28 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
         IconNuevoHover.setVisible(false);
     }//GEN-LAST:event_btnNuevoMouseExited
 
+    private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
+        opcInventario(1);
+    }//GEN-LAST:event_actualizarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        opcInventario(2);
+    }//GEN-LAST:event_eliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel IconNuevo;
     private javax.swing.JLabel IconNuevoHover;
     private javax.swing.JScrollPane Tabla;
+    private javax.swing.JMenuItem actualizar;
     private javax.swing.JPanel btnExit;
     private javax.swing.JPanel btnNuevo;
+    private javax.swing.JMenuItem eliminar;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPopupMenu menuInventario;
     private javax.swing.JTable tablaInven;
     private javax.swing.JTextField txtBuscarInventario;
     // End of variables declaration//GEN-END:variables

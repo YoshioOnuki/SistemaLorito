@@ -31,7 +31,7 @@ public class rolController {
             
             acce.close();
         } catch (Exception e) {
-            System.out.println("Error al agregar usuario" + e);
+            System.out.println("Error obtener el ID del Rol" + e);
         }
         
         return r;

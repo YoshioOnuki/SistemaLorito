@@ -79,8 +79,6 @@ public class SubmoduloTrabajador extends javax.swing.JPanel {
         if(fila == -1){
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
         }else{
-            //codEmp = Integer.parseInt(tablaEmp.getValueAt(fila, 0).toString());
-            
             if(opc == 1){
                 idTrabajador = Integer.parseInt(tablaTrab.getValueAt(fila, 0).toString());
                 tipoCRUD = 2;

@@ -27,7 +27,7 @@ public class SubmoduloReporteEntradas extends javax.swing.JPanel {
     void buscarEntradas(){
         try {
             String tipo = "Entrada";
-            m = detController.consultarEntradaSalida(txtBuscarEntrada.getText(), tipo);
+            m = detController.consultarEntrada(txtBuscarEntrada.getText(), tipo);
             tablaReporteEntrada.setModel(m);
             
             TableColumn t1 = tablaReporteEntrada.getColumn("ID");
@@ -40,7 +40,7 @@ public class SubmoduloReporteEntradas extends javax.swing.JPanel {
             t2.setMaxWidth(230);
             t2.setMinWidth(230);
             
-            TableColumn t3 = tablaReporteEntrada.getColumn("CANTIDAD");
+            TableColumn t3 = tablaReporteEntrada.getColumn("ENTRADA");
             t3.setPreferredWidth(100);
             t3.setMaxWidth(100);
             t3.setMinWidth(100);

@@ -5,8 +5,13 @@ import Controlador.inventarioController;
 import Controlador.rolController;
 import Controlador.tipoController;
 import Modelo.inventario;
+import Modelo.tipo;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
 
 
 public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
@@ -15,9 +20,12 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
     Controlador.tipoController tipoController = new tipoController();
     
     Modelo.inventario inveModelo = new inventario();
+    Modelo.tipo tipoModelo = new tipo();
     
     public SubmoduloInventarioAgregar() {
         initComponents();
+        cargarCboRol();
+        titulo();
     }
 
     
@@ -30,15 +38,119 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
             lblTitulo.setText("");
             lblTitulo.setText("AGREGAR INVENTARIO");
             
-        }else if(SubmoduloTrabajador.tipoCRUD == 2){
+        }else if(SubmoduloReporteInventario.tipoCRUD == 2){
             lblTitulo.setText("");
             lblTitulo.setText("ACTUALIZAR INVENTARIO");
-            //cargarDatos();
+            cargarDatos();
+        }
+    }
+    
+    //Cargamos los datos del inventario seleccionado
+    void cargarDatos(){
+        int id = SubmoduloReporteInventario.idInven; 
+        
+        txtCantidad.setEnabled(false);
+        jcalFecha.setEnabled(false);
+        
+        inveModelo = inveController.validarInventario(id);
+        
+        txtNombre.setText(inveModelo.getInventario_nombre());
+        txtCompra.setText(""+inveModelo.getInventario_precio_compra());
+        txtVenta.setText(""+inveModelo.getInventario_precio_venta());
+        txtCantidad.setText(""+inveModelo.getInventario_cantidad());
+        System.out.println(tipoModelo.getTipoDescripcion());
+        System.out.println(inveModelo.getTipo_id());
+        cboTipo.setSelectedIndex(inveModelo.getTipo_id());
+        try {
+            SimpleDateFormat formatodeltexto = new SimpleDateFormat("yyyy-MM-dd");
+            Date fecha = null;
+            fecha = (Date) formatodeltexto.parse(inveModelo.getInventario_fecha_registro());
+            jcalFecha.setDate(fecha);
+        } catch (Exception e) {
+        }
+    }
+    
+    void agregarInventario(){
+        if(txtNombre.getText().equals("") || txtCompra.getText().equals("") || txtVenta.getText().equals("") || txtCantidad.getText().equals("") || jcalFecha.getDate() == null ||  cboTipo.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Campos requeridos vacios");
+            txtNombre.requestFocus();
+        }else{
+            
+            String nombre = txtNombre.getText();
+            float precioCompra = Float.parseFloat(txtCompra.getText());
+            float precioVenta = Float.parseFloat(txtVenta.getText());
+            int cant = Integer.parseInt(txtCantidad.getText());
+            Date f = jcalFecha.getDate();
+            DateFormat fec = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha = fec.format(f);
+            int tipo = tipoController.idTipo(cboTipo.getSelectedItem().toString());
+            
+            
+            Object[] ob = new Object[7];
+
+            ob[0] = nombre;
+            ob[1] = precioCompra;
+            ob[2] = precioVenta;
+            ob[3] = cant;
+            ob[4] = fecha;
+            ob[5] = 1;
+            ob[6] = tipo;
+
+            int respuesta = inveController.addInventario(ob);
+
+            if(respuesta>0){
+                JOptionPane.showMessageDialog(null, "Datos del inventario ingresados correctamente");
+            }
+
+            Vista.SubmoduloReporteInventario mInventario = new Vista.SubmoduloReporteInventario();
+
+            mInventario.setSize(970, 550);
+            mInventario.setLocation(0, 0);
+            Principal.PanelPrincipal.removeAll();
+            Principal.PanelPrincipal.add(mInventario, BorderLayout.CENTER);
+            Principal.PanelPrincipal.revalidate();
+            Principal.PanelPrincipal.repaint();
         }
     }
     
     
-    
+    void actualizarInventario(){
+        if(txtNombre.getText().equals("") || txtCompra.getText().equals("") || txtVenta.getText().equals("") ||  cboTipo.getSelectedIndex()==0 ){
+            JOptionPane.showMessageDialog(null, "Campos requeridos vacios");
+            txtNombre.requestFocus();
+        }else{
+            int id = SubmoduloReporteInventario.idInven; 
+            String nombre = txtNombre.getText();
+            String pCompra = txtCompra.getText();
+            String pVenta = txtVenta.getText();
+            int tipo = tipoController.idTipo(cboTipo.getSelectedItem().toString());
+            
+            inveModelo = inveController.validarInventario(id);
+            
+            Object[] ob = new Object[4];
+            ob[0] = nombre;
+            ob[1] = pCompra;
+            ob[2] = pVenta;
+            ob[3] = tipo;
+
+            int respuesta = inveController.updateInventario(ob, id);
+
+            if(respuesta>0){
+                JOptionPane.showMessageDialog(null, "Datos del Inventario actualizados correctamente");
+            }
+
+            Vista.SubmoduloReporteInventario mInven = new Vista.SubmoduloReporteInventario();
+
+            mInven.setSize(970, 550);
+            mInven.setLocation(0, 0);
+            Principal.PanelPrincipal.removeAll();
+            Principal.PanelPrincipal.add(mInven, BorderLayout.CENTER);
+            Principal.PanelPrincipal.revalidate();
+            Principal.PanelPrincipal.repaint();
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -136,6 +248,7 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         btnRegresar.setMaximumSize(new java.awt.Dimension(115, 42));
         btnRegresar.setMinimumSize(new java.awt.Dimension(115, 42));
         btnRegresar.setName(""); // NOI18N
+        btnRegresar.setPreferredSize(new java.awt.Dimension(115, 42));
         btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRegresarMouseClicked(evt);
@@ -193,6 +306,11 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         txtVenta.setMaximumSize(new java.awt.Dimension(220, 30));
         txtVenta.setMinimumSize(new java.awt.Dimension(220, 30));
         txtVenta.setPreferredSize(new java.awt.Dimension(220, 30));
+        txtVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtVentaKeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
         jLabel4.setText("Cantidad:");
@@ -201,6 +319,11 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         txtCantidad.setMaximumSize(new java.awt.Dimension(220, 30));
         txtCantidad.setMinimumSize(new java.awt.Dimension(220, 30));
         txtCantidad.setPreferredSize(new java.awt.Dimension(220, 30));
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("SF UI Display", 0, 14)); // NOI18N
         jLabel5.setText("Tipo:");
@@ -214,6 +337,7 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         btnGuardar.setMaximumSize(new java.awt.Dimension(115, 42));
         btnGuardar.setMinimumSize(new java.awt.Dimension(115, 42));
         btnGuardar.setName(""); // NOI18N
+        btnGuardar.setPreferredSize(new java.awt.Dimension(115, 42));
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnGuardarMouseClicked(evt);
@@ -263,7 +387,6 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         jLabel8.setText("Fecha de Registro:");
 
         jcalFecha.setMaximumSize(new java.awt.Dimension(220, 30));
-        jcalFecha.setMinSelectableDate(new java.util.Date(-62135747933000L));
         jcalFecha.setMinimumSize(new java.awt.Dimension(220, 30));
         jcalFecha.setPreferredSize(new java.awt.Dimension(220, 30));
 
@@ -291,9 +414,10 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jcalFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,22 +428,22 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCantidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(120, 120, 120))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(lblTitulo)
+                .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(lblTitulo)
-                        .addGap(60, 60, 60)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -328,15 +452,18 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
                         .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtVenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel8)))
-                    .addComponent(jcalFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel5))
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel8))
+                            .addComponent(jcalFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4)
+                        .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,7 +473,12 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExitMouseClicked
+        Vista.SubmoduloReporteInventario mInventario = new Vista.SubmoduloReporteInventario();
+
+        mInventario.setSize(970, 550);
+        mInventario.setLocation(0, 0);
         Principal.PanelPrincipal.removeAll();
+        Principal.PanelPrincipal.add(mInventario, BorderLayout.CENTER);
         Principal.PanelPrincipal.revalidate();
         Principal.PanelPrincipal.repaint();
     }//GEN-LAST:event_btnExitMouseClicked
@@ -391,10 +523,10 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCompraKeyTyped
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        if(SubmoduloTrabajador.tipoCRUD==1){
-            //agregarTrabajador();
-        }else if(SubmoduloTrabajador.tipoCRUD==2){
-            //actualizarTrabajador();
+        if(SubmoduloReporteInventario.tipoCRUD==1){
+            agregarInventario();
+        }else if(SubmoduloReporteInventario.tipoCRUD==2){
+            actualizarInventario();
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
@@ -407,6 +539,26 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         IconGuardar.setVisible(true);
         IconGuardarHover.setVisible(false);
     }//GEN-LAST:event_btnGuardarMouseExited
+
+    private void txtVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVentaKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+        if(txtCompra.getText().length() >= 8){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtVentaKeyTyped
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+        char c = evt.getKeyChar();
+        if(c<'0' || c>'9'){
+            evt.consume();
+        }
+        if(txtCompra.getText().length() >= 8){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

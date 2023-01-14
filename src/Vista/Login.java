@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
     Controlador.trabajadorController trabController = new trabajadorController();
     
     public static String dniTrab, nombresTrab, tipoRol;
-    public static int rol;
+    public static int rol, idtraba;
     
 
     public Login() {
@@ -28,7 +28,7 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema Lorito");
         placeholder();
-        txtUsuario.setText("admin");
+        txtUsuario.setText("traba");
         txtContrasenia.setText("123");
     }
     
@@ -49,7 +49,8 @@ public class Login extends javax.swing.JFrame {
             usuMod = usuController.validarUsuario(usu, cont);
             if(usuMod.getUsuario_user()!= null && usuMod.getUsuario_contra()!= null){
                 int idu = usuMod.getUsuario_id();
-                int idtraba = usuMod.getTrabajador_id();
+                idtraba = usuMod.getTrabajador_id();
+                
                 System.out.println("id usuario: " + idu);
                 System.out.println("id empleado: " + idtraba);
                 

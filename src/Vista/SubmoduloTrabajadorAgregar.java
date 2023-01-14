@@ -67,7 +67,7 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
     
     void agregarTrabajador(){
         if(txtDni.getText().equals("") || txtNombres.getText().equals("") ||txtDireccion.getText().equals("") || cboRol.getSelectedIndex()==0 ){
-            JOptionPane.showMessageDialog(null, "Campos de textos vacios");
+            JOptionPane.showMessageDialog(null, "Campos requeridos vacios");
             txtDni.requestFocus();
         }else{
             
