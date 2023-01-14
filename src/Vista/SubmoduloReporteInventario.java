@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.historialController;
 import Controlador.inventarioController;
 import Modelo.inventario;
 import static Vista.SubmoduloTrabajador.idTrabajador;
@@ -9,6 +10,9 @@ import static Vista.SubmoduloTrabajador.tipoCRUD;
 import static Vista.SubmoduloTrabajador.tipoUsua;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -18,6 +22,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     DefaultTableModel m = new DefaultTableModel();
     
     Controlador.inventarioController inveController = new inventarioController();
+    Controlador.historialController histoController = new historialController();
     
     Modelo.inventario inveModelo = new inventario();
     
@@ -42,12 +47,19 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
             btnNuevo.setVisible(false);
             IconNuevo.setVisible(false);
             IconNuevoHover.setVisible(false);
+            menuInventario.setEnabled(false);
+            actualizar.setVisible(false);
+            eliminar.setVisible(false);
+            noPermitido.setVisible(true);
         }else if(Login.tipoRol.equalsIgnoreCase("Trabajador")){
             lblTitulo.setText("");
             lblTitulo.setText("INVENTARIO");
             btnNuevo.setVisible(true);
             IconNuevo.setVisible(true);
             IconNuevoHover.setVisible(true);
+            actualizar.setVisible(true);
+            eliminar.setVisible(true);
+            noPermitido.setVisible(false);
         }
     }
     
@@ -105,7 +117,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
             if(opc == 1){
                 inveModelo = inveController.validarInventario(Integer.parseInt(tablaInven.getValueAt(fila, 0).toString()));
                 idInven = inveModelo.getInventario_id();
-                System.out.println(idInven);
+//                System.out.println(idInven);
                 tipoCRUD = 2;
                 
                 Vista.SubmoduloInventarioAgregar mInvenAgr = new Vista.SubmoduloInventarioAgregar();
@@ -119,16 +131,38 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
             }else if(opc == 2){
                 inveModelo = inveController.validarInventario(Integer.parseInt(tablaInven.getValueAt(fila, 0).toString()));
                 idInven = inveModelo.getInventario_id();
-                System.out.println(idInven);
+//                System.out.println(idInven);
                 int estado = 0;
-
-                System.out.println(idInven);
-                int respuesta = inveController.cambiarEstadoInventario(idInven, estado);
                 
-                if(respuesta > 0){
-                    JOptionPane.showMessageDialog(null, "Inventario seleccionado fue eliminado");
+//                System.out.println(idInven);
+                if(inveModelo.getInventario_cantidad() != 0){            
+                    JOptionPane.showMessageDialog(null, "Para eliminar inventario debe tener cantidad igual a cero");
+                }else{
+                    int respuesta = inveController.cambiarEstadoInventario(idInven, estado);
+
+                    if(respuesta > 0){
+                        JOptionPane.showMessageDialog(null, "Inventario seleccionado fue eliminado");
+                    }
+                    
+                    java.util.Date fechaActual = new Date();
+                    DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                    String fecha2 = fec2.format(fechaActual);
+                    String histo = "Eliminar inventario";
+
+                    Object[] obHisto = new Object[3];
+
+                    obHisto[0] = histo;
+                    obHisto[1] = fecha2;
+                    obHisto[2] = Login.nombresTrab;
+
+                    int respuesta2 = histoController.addHistorial(obHisto);
+
+                    if(respuesta2>0){
+                        System.out.println("Historial Agregado");
+                    }
+            
+                    buscarInventario();
                 }
-                buscarInventario();
             }
         }
     }
@@ -141,6 +175,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
         menuInventario = new javax.swing.JPopupMenu();
         actualizar = new javax.swing.JMenuItem();
         eliminar = new javax.swing.JMenuItem();
+        noPermitido = new javax.swing.JMenuItem();
         jPanel6 = new javax.swing.JPanel();
         btnExit = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -170,6 +205,11 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
             }
         });
         menuInventario.add(eliminar);
+
+        noPermitido.setFont(new java.awt.Font("SF UI Display", 1, 14)); // NOI18N
+        noPermitido.setText("No permitido");
+        noPermitido.setEnabled(false);
+        menuInventario.add(noPermitido);
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMaximumSize(new java.awt.Dimension(970, 550));
@@ -432,6 +472,7 @@ public class SubmoduloReporteInventario extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JPopupMenu menuInventario;
+    private javax.swing.JMenuItem noPermitido;
     private javax.swing.JTable tablaInven;
     private javax.swing.JTextField txtBuscarInventario;
     // End of variables declaration//GEN-END:variables

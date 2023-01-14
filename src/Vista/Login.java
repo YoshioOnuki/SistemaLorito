@@ -28,8 +28,8 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Sistema Lorito");
         placeholder();
-        txtUsuario.setText("traba");
-        txtContrasenia.setText("123");
+//        txtUsuario.setText("traba");
+//        txtContrasenia.setText("123");
     }
     
     
@@ -51,20 +51,20 @@ public class Login extends javax.swing.JFrame {
                 int idu = usuMod.getUsuario_id();
                 idtraba = usuMod.getTrabajador_id();
                 
-                System.out.println("id usuario: " + idu);
-                System.out.println("id empleado: " + idtraba);
+//                System.out.println("id usuario: " + idu);
+//                System.out.println("id empleado: " + idtraba);
                 
                 trabMod = trabController.validarTrabajador(idtraba);
                 dniTrab = trabMod.getTrabajador_DNI();
                 rol = trabMod.getRolID();
                 nombresTrab = trabMod.getTrabajadorNombres();
-                System.out.println("DNI trabajador: " + dniTrab);
-                System.out.println("Nombre del trabajador: " + nombresTrab);
-                if (rol == 1) {
-                    System.out.println("Rol del trabajador: Administrador");
-                } else {
-                    System.out.println("Rol del trabajador: Trabajador");
-                }
+//                System.out.println("DNI trabajador: " + dniTrab);
+//                System.out.println("Nombre del trabajador: " + nombresTrab);
+//                if (rol == 1) {
+//                    System.out.println("Rol del trabajador: Administrador");
+//                } else {
+//                    System.out.println("Rol del trabajador: Trabajador");
+//                }
                 
                 tipoRol = trabController.validarTrabajadorRol(idtraba);
                 

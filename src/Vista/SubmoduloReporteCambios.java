@@ -28,7 +28,7 @@ public class SubmoduloReporteCambios extends javax.swing.JPanel {
             m = historialController.consultarCambios(txtBuscarCambios.getText());
             tablaHistorialCambios.setModel(m);
             
-            //"PRODUCTO","CANTIDAD","FECHA","TRABAJADOR"
+            //"ID","DESCRIPCION","FECHA","TRABAJADOR"
             
             TableColumn t1 = tablaHistorialCambios.getColumn("ID");
             t1.setPreferredWidth(50);

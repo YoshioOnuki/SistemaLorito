@@ -194,7 +194,7 @@ public class inventarioController {
         DefaultTableModel m = new DefaultTableModel(null, encabe);
         Object[] o = new Object[8];
         
-        String sql = "SELECT i.inventario_id, i.inventario_nombre, t.tipo_descripcion, i.inventario_precio_compra, i.inventario_precio_venta, i.inventario_cantidad, i.inventario_fecha_registro FROM inventario i INNER JOIN tipo t ON i.tipo_id=t.tipo_id WHERE i.inventario_estado=1 AND (i.inventario_id LIKE '%" + b + "%' OR i.inventario_nombre LIKE '%" + b +"%' OR t.tipo_descripcion LIKE '%"+ b +"%' OR i.inventario_precio_compra LIKE '%"+ b +"%' OR i.inventario_precio_venta LIKE '%"+ b +"%' OR i.inventario_cantidad LIKE '%"+ b +"%' OR i.inventario_fecha_registro LIKE '%"+ b +"%') ORDER BY 1 ASC";
+        String sql = "SELECT i.inventario_id, i.inventario_nombre, t.tipo_descripcion, i.inventario_precio_compra, i.inventario_precio_venta, i.inventario_cantidad, i.inventario_fecha_registro FROM inventario i INNER JOIN tipo t ON i.tipo_id=t.tipo_id WHERE i.inventario_estado=1 AND (i.inventario_id LIKE '%" + b + "%' OR i.inventario_nombre LIKE '%" + b +"%' OR t.tipo_descripcion LIKE '%"+ b +"%' OR i.inventario_precio_compra LIKE '%"+ b +"%' OR i.inventario_precio_venta LIKE '%"+ b +"%' OR i.inventario_cantidad LIKE '%"+ b +"%' OR i.inventario_fecha_registro LIKE '%"+ b +"%') ORDER BY 1 DESC";
    
         try {
             acce = con.conectardb();

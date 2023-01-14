@@ -131,7 +131,7 @@ public class trabajadorController {
         
         
         
-        String sql = "SELECT t.trabajador_id, t.trabajador_DNI, t.trabajador_nombres, t.trabajador_direccion, r.rol_descripcion FROM trabajador t INNER JOIN rol r ON t.rol_id=r.rol_id WHERE t.trabajador_id LIKE '%" + b + "%' OR t.trabajador_DNI LIKE '%" + b +"%' OR t.trabajador_nombres LIKE '%"+ b +"%' OR t.trabajador_direccion LIKE '%"+ b +"%' OR r.rol_descripcion LIKE '%"+ b +"%'";
+        String sql = "SELECT t.trabajador_id, t.trabajador_DNI, t.trabajador_nombres, t.trabajador_direccion, r.rol_descripcion FROM trabajador t INNER JOIN rol r ON t.rol_id=r.rol_id WHERE t.trabajador_id LIKE '%" + b + "%' OR t.trabajador_DNI LIKE '%" + b +"%' OR t.trabajador_nombres LIKE '%"+ b +"%' OR t.trabajador_direccion LIKE '%"+ b +"%' OR r.rol_descripcion LIKE '%"+ b +"%' ORDER BY 1 DESC";
    
         try {
             acce = con.conectardb();

@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.historialController;
 import Controlador.inventarioController;
 import Controlador.rolController;
 import Controlador.tipoController;
@@ -18,6 +19,7 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
 
     Controlador.inventarioController inveController = new inventarioController();
     Controlador.tipoController tipoController = new tipoController();
+    Controlador.historialController histoController = new historialController();
     
     Modelo.inventario inveModelo = new inventario();
     Modelo.tipo tipoModelo = new tipo();
@@ -58,8 +60,8 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
         txtCompra.setText(""+inveModelo.getInventario_precio_compra());
         txtVenta.setText(""+inveModelo.getInventario_precio_venta());
         txtCantidad.setText(""+inveModelo.getInventario_cantidad());
-        System.out.println(tipoModelo.getTipoDescripcion());
-        System.out.println(inveModelo.getTipo_id());
+//        System.out.println(tipoModelo.getTipoDescripcion());
+//        System.out.println(inveModelo.getTipo_id());
         cboTipo.setSelectedIndex(inveModelo.getTipo_id());
         try {
             SimpleDateFormat formatodeltexto = new SimpleDateFormat("yyyy-MM-dd");
@@ -96,10 +98,27 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
             ob[5] = 1;
             ob[6] = tipo;
 
-            int respuesta = inveController.addInventario(ob);
+            int respuesta1 = inveController.addInventario(ob);
 
-            if(respuesta>0){
+            if(respuesta1 > 0){
                 JOptionPane.showMessageDialog(null, "Datos del inventario ingresados correctamente");
+            }
+            
+            java.util.Date fechaActual = new Date();
+            DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha2 = fec2.format(fechaActual);
+            String histo = "Agregar inventario";
+            
+            Object[] obHisto = new Object[3];
+
+            obHisto[0] = histo;
+            obHisto[1] = fecha2;
+            obHisto[2] = Login.nombresTrab;
+            
+            int respuesta2 = histoController.addHistorial(obHisto);
+
+            if(respuesta2>0){
+                System.out.println("Historial Agregado");
             }
 
             Vista.SubmoduloReporteInventario mInventario = new Vista.SubmoduloReporteInventario();
@@ -137,6 +156,24 @@ public class SubmoduloInventarioAgregar extends javax.swing.JPanel {
 
             if(respuesta>0){
                 JOptionPane.showMessageDialog(null, "Datos del Inventario actualizados correctamente");
+            }
+            
+            java.util.Date fechaActual = new Date();
+            DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+            String fecha2 = fec2.format(fechaActual);
+            
+            String histo = "Actualizar inventario";
+            
+            Object[] obHisto = new Object[3];
+
+            obHisto[0] = histo;
+            obHisto[1] = fecha2;
+            obHisto[2] = Login.nombresTrab;
+            
+            int respuesta2 = histoController.addHistorial(obHisto);
+
+            if(respuesta2>0){
+                System.out.println("Historial Agregado");
             }
 
             Vista.SubmoduloReporteInventario mInven = new Vista.SubmoduloReporteInventario();

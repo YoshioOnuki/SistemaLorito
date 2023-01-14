@@ -1,6 +1,7 @@
 
 package Vista;
 
+import Controlador.historialController;
 import Controlador.rolController;
 import Controlador.trabajadorController;
 import Controlador.usuarioController;
@@ -19,6 +20,7 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
     
     Controlador.trabajadorController trabController= new trabajadorController();
     Controlador.rolController rolController= new rolController();
+    Controlador.historialController histoController= new historialController();
     
     Modelo.trabajador trabModelo = new trabajador();
     Modelo.rol rolModelo = new rol();
@@ -54,7 +56,7 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
     //Cargar DAtos
     void cargarDatosActualizar(){
         int idTrab = SubmoduloTrabajador.idTrabajador; 
-        System.out.println("idTrabajador " + idTrab);
+//        System.out.println("idTrabajador " + idTrab);
         trabModelo = trabController.validarTrabajador(idTrab);
         
         txtID.setText(""+ trabModelo.getTrabajadorID());
@@ -91,6 +93,23 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
                 if(respuesta>0){
                     JOptionPane.showMessageDialog(null, "Datos del trabajador ingresados correctamente");
                 }
+                
+                java.util.Date fechaActual = new Date();
+                DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha2 = fec2.format(fechaActual);
+                String histo = "Agregar trabajador";
+
+                Object[] obHisto = new Object[3];
+                
+                obHisto[0] = histo;
+                obHisto[1] = fecha2;
+                obHisto[2] = Login.nombresTrab;
+
+                int respuesta3 = histoController.addHistorial(obHisto);
+
+                if(respuesta3 > 0){
+                    System.out.println("Historial Agregado");
+                }
 
                 Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
 
@@ -120,7 +139,7 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
             trabModelo = trabController.validarTrabajador(id);
             
             if(dni.equalsIgnoreCase(trabModelo.getTrabajador_DNI())){
-                System.out.println(dni);
+//                System.out.println(dni);
                 if(trabController.validarDuplicados(dni) > 1){
                     JOptionPane.showMessageDialog(null, "El DNI ingresado ya existe");
                 }else{
@@ -135,6 +154,23 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
 
                     if(respuesta>0){
                         JOptionPane.showMessageDialog(null, "Datos del trabajador actualizadoos correctamente");
+                    }
+                    
+                    java.util.Date fechaActual = new Date();
+                    DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                    String fecha2 = fec2.format(fechaActual);
+                    String histo = "Actualizar trabajador";
+
+                    Object[] obHisto = new Object[3];
+
+                    obHisto[0] = histo;
+                    obHisto[1] = fecha2;
+                    obHisto[2] = Login.nombresTrab;
+
+                    int respuesta3 = histoController.addHistorial(obHisto);
+
+                    if(respuesta3 > 0){
+                        System.out.println("Historial Agregado");
                     }
 
                     Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();
@@ -160,6 +196,23 @@ public class SubmoduloTrabajadorAgregar extends javax.swing.JPanel {
 
                 if(respuesta>0){
                     JOptionPane.showMessageDialog(null, "Datos del trabajador actualizadoos correctamente");
+                }
+                
+                java.util.Date fechaActual = new Date();
+                DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha2 = fec2.format(fechaActual);
+                String histo = "Actualizar trabajador";
+
+                Object[] obHisto = new Object[3];
+
+                obHisto[0] = histo;
+                obHisto[1] = fecha2;
+                obHisto[2] = Login.nombresTrab;
+
+                int respuesta3 = histoController.addHistorial(obHisto);
+
+                if(respuesta3 > 0){
+                    System.out.println("Historial Agregado");
                 }
 
                 Vista.SubmoduloTrabajador mTrab = new Vista.SubmoduloTrabajador();

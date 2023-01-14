@@ -2,6 +2,7 @@
 package Vista;
 
 import Controlador.detalleController;
+import Controlador.historialController;
 import Controlador.inventarioController;
 import Modelo.detalle_inventario;
 import Modelo.inventario;
@@ -20,6 +21,7 @@ public class SubmoduloEntradaSalidaAgregar extends javax.swing.JPanel {
     
     Controlador.inventarioController inveController = new inventarioController();
     Controlador.detalleController detalleController = new detalleController();
+    Controlador.historialController histoController = new historialController();
     
    
     public SubmoduloEntradaSalidaAgregar() {
@@ -81,7 +83,7 @@ public class SubmoduloEntradaSalidaAgregar extends javax.swing.JPanel {
                 java.util.Date fecha1 = new Date();
                 DateFormat fec = new SimpleDateFormat("yyyy-MM-dd");
                 String fecha = fec.format(fecha1);
-                System.out.println(fecha);
+//                System.out.println(fecha);
                 int cant = Integer.parseInt(txtCant.getText());
                 int idtrabajador = Login.idtraba;
                 inveModelo = inveController.validarInventarioPorNombre(txtNombre.getText());
@@ -104,6 +106,23 @@ public class SubmoduloEntradaSalidaAgregar extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                 }
                 
+                java.util.Date fechaActual = new Date();
+                DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                String fecha2 = fec2.format(fechaActual);
+                String histo = "Entrada de inventario";
+
+                Object[] obHisto = new Object[3];
+
+                obHisto[0] = histo;
+                obHisto[1] = fecha2;
+                obHisto[2] = Login.nombresTrab;
+
+                int respuesta3 = histoController.addHistorial(obHisto);
+
+                if(respuesta3 > 0){
+                    System.out.println("Historial Agregado");
+                }
+                
                 Vista.SubmoduloEntradaSalida mEntradaSalida = new Vista.SubmoduloEntradaSalida();
 
                 mEntradaSalida.setSize(970, 550);
@@ -118,7 +137,7 @@ public class SubmoduloEntradaSalidaAgregar extends javax.swing.JPanel {
                 java.util.Date fecha1 = new Date();
                 DateFormat fec = new SimpleDateFormat("yyyy-MM-dd");
                 String fecha = fec.format(fecha1);
-                System.out.println(fecha);
+//                System.out.println(fecha);
                 int cant = Integer.parseInt(txtCant.getText());
                 int idtrabajador = Login.idtraba;
                 inveModelo = inveController.validarInventarioPorNombre(txtNombre.getText());
@@ -143,6 +162,23 @@ public class SubmoduloEntradaSalidaAgregar extends javax.swing.JPanel {
                     if(respuesta1 > 0 && respuesta2 > 0){
                         JOptionPane.showMessageDialog(null, "Datos actualizados correctamente");
                     } 
+                    
+                    java.util.Date fechaActual = new Date();
+                    DateFormat fec2 = new SimpleDateFormat("yyyy-MM-dd");
+                    String fecha2 = fec2.format(fechaActual);
+                    String histo = "Salida de inventario";
+
+                    Object[] obHisto = new Object[3];
+
+                    obHisto[0] = histo;
+                    obHisto[1] = fecha2;
+                    obHisto[2] = Login.nombresTrab;
+
+                    int respuesta3 = histoController.addHistorial(obHisto);
+
+                    if(respuesta3 > 0){
+                        System.out.println("Historial Agregado");
+                    }
                     
                     Vista.SubmoduloEntradaSalida mEntradaSalida = new Vista.SubmoduloEntradaSalida();
 

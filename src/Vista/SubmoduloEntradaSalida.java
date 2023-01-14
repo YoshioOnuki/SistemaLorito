@@ -62,7 +62,7 @@ public class SubmoduloEntradaSalida extends javax.swing.JPanel {
             m = detalleController.consultarEntradaSalida2(txtBuscarEntradaSalida.getText());
             tablaEntradaSalida.setModel(m);
             
-            //"ID", "PRODUCTO","CANTIDAD","FECHA","TRABAJADOR","MOVIMIENTO"
+            //"ID", "PRODUCTO","ENTRADA/SALIDA","FECHA","TRABAJADOR","MOVIMIENTO"
             
             TableColumn t1 = tablaEntradaSalida.getColumn("ID");
             t1.setPreferredWidth(50);

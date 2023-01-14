@@ -43,7 +43,7 @@ public class historialController {
         DefaultTableModel m = new DefaultTableModel(null, titulos);
         Object[] o = new Object[5];
         
-        String sql = "SELECT historial_id, historial_descripcion, historial_fecha, historial_trabajador FROM historial_cambios WHERE historial_id LIKE '%" + b + "%' OR historial_descripcion LIKE '%" + b +"%' OR historial_fecha LIKE '%" + b +"%' OR historial_trabajador LIKE '%" + b +"%'";
+        String sql = "SELECT historial_id, historial_descripcion, historial_fecha, historial_trabajador FROM historial_cambios WHERE historial_id LIKE '%" + b + "%' OR historial_descripcion LIKE '%" + b +"%' OR historial_fecha LIKE '%" + b +"%' OR historial_trabajador LIKE '%" + b +"%' ORDER BY 1 DESC";
    
         try {
             acce = con.conectardb();
