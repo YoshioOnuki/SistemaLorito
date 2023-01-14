@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-01-2023 a las 21:09:32
+-- Tiempo de generación: 14-01-2023 a las 09:58:26
 -- Versión del servidor: 10.4.25-MariaDB
 -- Versión de PHP: 8.1.10
 
@@ -46,7 +46,7 @@ CREATE TABLE `historial_cambios` (
   `historial_id` int(11) NOT NULL,
   `historial_descripcion` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
   `historial_fecha` date NOT NULL,
-  `historial_trabajador_id` int(11) NOT NULL
+  `historial_trabajador` varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -62,6 +62,7 @@ CREATE TABLE `inventario` (
   `inventario_precio_venta` decimal(10,2) NOT NULL,
   `inventario_cantidad` int(11) NOT NULL,
   `inventario_fecha_registro` date NOT NULL,
+  `inventario_estado` int(11) NOT NULL,
   `tipo_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -97,6 +98,14 @@ CREATE TABLE `tipo` (
   `tipo_estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tipo`
+--
+
+INSERT INTO `tipo` (`tipo_id`, `tipo_descripcion`, `tipo_estado`) VALUES
+(1, 'Producto', 1),
+(2, 'Servicio', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -116,8 +125,7 @@ CREATE TABLE `trabajador` (
 --
 
 INSERT INTO `trabajador` (`trabajador_id`, `trabajador_DNI`, `trabajador_nombres`, `trabajador_direccion`, `rol_id`) VALUES
-(1, '12345678', 'Jorge Andres Vasquez Santillan', 'Jr. los nogales 180', 1),
-(2, '10090765', 'Prueba Trabajador', 'Jr. Raymondi 140', 2);
+(1, '12345678', 'Jorge Vasquez Santillan', 'Jr. Ejemplo', 1);
 
 -- --------------------------------------------------------
 
@@ -138,8 +146,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `usuario_user`, `usuario_contra`, `usuario_estado`, `trabajador_id`) VALUES
-(1, 'admin', '123', 1, 1),
-(2, 'traba', '123', 1, 2);
+(1, 'admin', '123', 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -224,19 +231,19 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `tipo`
 --
 ALTER TABLE `tipo`
-  MODIFY `tipo_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `tipo_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `trabajador`
 --
 ALTER TABLE `trabajador`
-  MODIFY `trabajador_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `trabajador_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `usuario_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
